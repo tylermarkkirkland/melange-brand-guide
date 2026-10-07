@@ -32,7 +32,7 @@ export default function LogoChapter({ chapter }) {
       <section className="chapter-body logo-variants screen" aria-label="Variations">
         {LOGO.variants.map((v, i) => (
           <Reveal key={v.id} className="logo-variant" delay={i * 0.15} y={24}>
-            <div className={`logo-variant__stage${v.id === 'one-colour' ? ' logo-variant__stage--ice' : ''}`}>
+            <div className={`logo-variant__stage${v.id === 'one-color' ? ' logo-variant__stage--ice' : ''}`}>
               {v.id === 'mark' ? <Lockup size={52} parts="mark" /> : <Lockup size={44} variant="flat" color="var(--ink)" />}
             </div>
             <div className="logo__caption">

@@ -18,16 +18,20 @@ function Voice({ voice, intro }) {
       viewport={{ amount: 0.5 }}
     >
       <header className="voice__head">
-        <Reveal as="p" className="data-tag voice__label">{voice.label}</Reveal>
-        <Reveal as="p" className="operational-body voice__note" delay={0.1}>{voice.note}</Reveal>
-        {intro && <Reveal as="p" className="operational-body-lg voice__intro" delay={0.2}>{intro}</Reveal>}
+        {intro && <Reveal as="p" className="operational-title voice__intro">{intro}</Reveal>}
+        <Reveal as="p" className="data-tag voice__label" delay={intro ? 0.2 : 0}>
+          {voice.voice} · <span className="ember-number">{voice.font}</span>
+        </Reveal>
+        <Reveal as="p" className="operational-body voice__note" delay={intro ? 0.3 : 0.1}>{voice.note}</Reveal>
       </header>
 
       <ol className="voice__styles">
         {voice.styles.map((s, i) => (
           <Reveal as="li" key={s.name} className="voice__row" delay={0.15 + i * 0.1} y={12}>
             <span className={`voice__sample ${s.className}`}>
-              {s.figure ? <RollingNumber value={s.figure} suffix="%" active={inView} delay={300} /> : s.sample}
+              {s.figure && <RollingNumber value={s.figure} suffix="%" active={inView} delay={300} />}
+              {s.status && <span className="voice__status" aria-hidden="true" />}
+              {!s.figure && s.sample}
             </span>
             <span className="voice__spec">
               <span className="data-row">{s.name}</span>

@@ -160,7 +160,7 @@ export const videoFragment = /* glsl */ `
     vec3 col = texture2D(uVideo, uv).rgb;
     float inside = step(0.0, uv.y) * step(uv.y, 1.0);
     // pull exposure down before tone mapping so the highlights keep their
-    // colour, then restore some saturation: a deep rust planet, not a pale one
+    // color, then restore some saturation: a deep rust planet, not a pale one
     col *= 0.52;
     float luma = dot(col, vec3(0.2126, 0.7152, 0.0722));
     col = max(mix(vec3(luma), col, 1.5), 0.0) * vec3(1.04, 0.97, 0.9);

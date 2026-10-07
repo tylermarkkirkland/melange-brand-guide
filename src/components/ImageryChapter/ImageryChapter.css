@@ -1,65 +1,86 @@
-.imagery-intro {
+/* Imagery: one page. The intro across the top, four photos in an uneven grid */
+.screen.imagery {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 40px;
+  padding-top: 136px;
+  padding-bottom: 64px;
+  height: 100vh;
 }
 
-.imagery-intro p {
+.imagery__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 48px;
+  align-items: end;
+}
+
+.imagery__intro {
   margin: 0;
   max-width: 22em;
   color: var(--chrome);
 }
 
-/* Each photograph pins for a beat once it has opened fully */
-.plate {
-  height: 160vh;
-  background: var(--void);
+/* one large photo, two small, one wide */
+.imagery__grid {
+  flex: 1;
+  min-height: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 16px;
 }
 
-.plate__pin {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow: hidden;
+.photo {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.plate__frame {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  will-change: clip-path;
-}
+.photo--0 { grid-row: 1 / span 2; }
+.photo--3 { grid-column: 2 / span 2; }
 
-.plate__frame img {
+.photo img {
+  flex: 1;
+  min-height: 0;
   width: 100%;
-  height: 100%;
   object-fit: cover;
-  will-change: transform;
+  background: var(--basalt);
 }
 
-/* a low shadow so the caption reads over any photograph */
-.plate__frame::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(0deg, rgba(7, 10, 12, 0.85) 0%, rgba(7, 10, 12, 0) 38%);
+/* the caption sits under its photo, so it reads cleanly whatever the photo does */
+.photo__caption {
+  flex: none;
 }
 
-.plate__caption {
-  position: absolute;
-  left: var(--gutter);
-  bottom: 64px;
-  max-width: 30em;
-}
-
-.plate__caption p {
+.photo__caption p {
   margin: 0;
 }
 
-.plate__caption .data-tag {
-  color: var(--silver-light);
-  margin-bottom: 12px;
+.photo .photo__label {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  color: var(--chrome);
 }
 
-.plate__caption .operational-body-lg {
-  color: var(--chrome);
+.photo .photo__line {
+  margin-top: 4px;
+  max-width: 30em;
+  color: var(--silver-light);
+}
+
+@media (max-height: 800px) and (min-width: 901px) {
+  .screen.imagery { padding-top: 112px; padding-bottom: 40px; gap: 24px; }
+}
+
+@media (max-width: 900px) {
+  .imagery__head { grid-template-columns: 1fr; }
+  .imagery__grid { grid-template-columns: 1fr; grid-template-rows: none; }
+  .photo, .photo--0, .photo--3 { grid-row: auto; grid-column: auto; }
+  .photo img { height: 50vh; flex: none; }
 }

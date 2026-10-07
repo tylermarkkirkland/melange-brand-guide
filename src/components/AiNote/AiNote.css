@@ -1,0 +1,16 @@
+.ai-note {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  max-width: 36em;
+}
+
+.ai-note__label {
+  flex: none;
+  color: var(--pewter);
+}
+
+.ai-note__text {
+  color: var(--silver);
+}

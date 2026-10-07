@@ -1,92 +1,151 @@
+/* The title slide */
 .opening {
   position: relative;
   z-index: 1;
   height: 100vh;
+  background: var(--void);
 }
 
-.opening__fade {
+.opening__slide {
   position: sticky;
   top: 0;
   height: 100vh;
+  padding: 40px var(--gutter) 44px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto 1fr auto;
+  column-gap: 64px;
+  overflow: hidden;
 }
 
-/* Name sits just under the pillar, as on the site */
-.opening__wordmark {
+/* hairlines: Pewter dark, drawn in from the left */
+.opening__rule {
   position: absolute;
   left: 0;
   right: 0;
-  top: 65vh;
+  height: 1px;
+  background: var(--pewter-dark);
+  transform-origin: left;
+}
+
+.opening__head {
+  grid-column: 1 / -1;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 24px;
+}
+
+.opening__head .opening__rule { bottom: 0; }
+
+.opening__company,
+.opening__edition {
   margin: 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
   gap: 14px;
-  font-weight: 400;
+  min-height: 44px;
 }
 
-.opening__top {
-  font-family: var(--font-ceremonial);
-  font-size: clamp(44px, 5.2vw, 84px);
-  line-height: 1;
-  letter-spacing: 0.24em;
-  margin-right: -0.24em;
-  white-space: nowrap;
+.opening__company { color: var(--chrome); }
+.opening__company img { height: 28px; width: auto; }
+.opening__edition { color: var(--pewter); gap: 10px; }
+
+/* Title, subtitle, presenter: left, set low like a cover */
+.opening__title-block {
+  align-self: center;
+  padding-top: 24px;
 }
 
-.opening__bottom {
-  font-family: var(--font-ceremonial);
-  font-size: 24px;
-  line-height: 1;
-  letter-spacing: 0.62em;
-  margin-right: -0.62em;
-  color: var(--silver-light);
-  white-space: nowrap;
+.opening__title {
+  margin: 0; /* ceremonial/display, the spec's largest style */
 }
 
-.opening__foot {
-  position: absolute;
-  left: var(--gutter);
-  right: var(--gutter);
-  bottom: 44px;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: end;
+.opening__line {
+  display: block;
+  overflow: hidden; /* each line rises out of its own 80px line box */
 }
 
-.opening__label {
-  margin: 0;
-  color: var(--chrome);
+.opening__line-inner { display: inline-block; }
+
+.opening__stroke { margin-top: 32px; }
+
+.opening__subtitle {
+  margin: 28px 0 0;
+  max-width: 34ch;
+  color: var(--silver);
+}
+
+.opening__presenter {
+  margin: 56px 0 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.opening__edition {
-  color: var(--pewter);
+.opening__presenter .data-tag { color: var(--pewter); }
+.opening__presenter .operational-title-sm { color: var(--chrome); }
+
+/* The mark, large and still on the right */
+.opening__mark {
+  align-self: center;
+  justify-self: end;
+  height: min(58vh, 560px);
+  width: auto;
+  margin-right: 4vw;
+  user-select: none;
 }
 
-.opening__cue {
+/* Contents: the agenda for the talk */
+.opening__contents {
+  grid-column: 1 / -1;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  align-items: start;
+  padding-top: 20px;
+}
+
+.opening__contents .opening__rule { top: 0; }
+
+.opening__contents-label {
+  margin: 0;
+  color: var(--pewter);
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  min-height: 44px;
+}
+
+.opening__contents ol {
+  grid-column: 2 / -1;
+  display: grid;
+  grid-template-columns: repeat(var(--count, 5), minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.opening__contents button {
+  display: flex;
   align-items: center;
   gap: 14px;
-  color: var(--pewter);
+  min-height: 44px;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--silver);
+  cursor: pointer;
+  font: inherit;
+  transition: color 0.4s var(--ease);
 }
 
-.opening__cue-line {
-  width: 1px;
-  height: 56px;
-  background: linear-gradient(var(--pewter), transparent);
-  transform-origin: top;
-  animation: cue 2.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
-}
+.opening__contents button:hover { color: var(--chrome); }
 
-@keyframes cue {
-  0% { transform: scaleY(0); opacity: 1; }
-  60% { transform: scaleY(1); opacity: 1; }
-  100% { transform: scaleY(1); opacity: 0; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .opening__cue-line { animation: none; }
+@media (max-width: 860px) {
+  .opening__slide { grid-template-columns: 1fr; }
+  .opening__mark { display: none; }
+  .opening__edition { display: none; }
+  .opening__contents { grid-template-columns: 1fr; }
+  .opening__contents ol { grid-column: 1; grid-template-columns: 1fr 1fr; }
 }

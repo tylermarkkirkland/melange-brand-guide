@@ -17,17 +17,19 @@ const MARK_HEIGHT = 2.5;
 const MARK_Y = 0.55;
 const LIGHT = {
   keyX: -6, keyY: 3.5, keyZ: 6.9, keyIntensity: 8.9,
-  glintX: -0.8, glintY: 0.2, glintZ: 2.55, glintIntensity: 3,
   environment: 0.76, roughness: 0.34, bloomStrength: 0.19, bloomThreshold: 0.96,
 };
 
 const clamp01 = (x) => Math.min(1, Math.max(0, x));
+// the logo chapter keeps only a trace of the landing's sunbeams
+const BEAMS = 0.25;
 const easeInOutCubic = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
 
 /**
- * The one WebGL scene in the guide: the site's sunlit pillar. It shows on the
- * opening and again for the Logo chapter, where it makes one slow turn.
- * Sections drive it through `sceneState`; when neither wants it, it stops rendering.
+ * The one WebGL scene in the guide: the site's sunlit pillar, shown only in the
+ * Logo chapter's title card, where it makes one slow turn. The chapter drives it
+ * through `sceneState`; the rest of the time it stops rendering.
+ * (The opening is a presentation title slide and does not use it.)
  */
 export default function GuideScene({ reducedMotion }) {
   const mountRef = useRef(null);
@@ -53,18 +55,19 @@ export default function GuideScene({ reducedMotion }) {
     scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
     scene.environmentRotation.set(Math.PI * 0.42, 0.5, 0);
 
-    const key = new THREE.DirectionalLight(0xffe2c0, 0);
+    // fully lit from the start: the landing's sunrise belongs to the website
+    const key = new THREE.DirectionalLight(0xffe2c0, LIGHT.keyIntensity);
+    key.position.set(LIGHT.keyX, LIGHT.keyY, LIGHT.keyZ);
     scene.add(key);
-    const rim = new THREE.DirectionalLight(0x8fb6d4, 0);
+    const rim = new THREE.DirectionalLight(0x8fb6d4, 1.2);
     rim.position.set(4, 2, -5);
     scene.add(rim);
-    const glint = new THREE.PointLight(0xffcf9a, 0, 0, 2);
-    scene.add(glint);
+    scene.environmentIntensity = LIGHT.environment;
 
     const shared = {
       uRes: { value: new THREE.Vector2(mount.clientWidth, mount.clientHeight) },
       uTime: { value: 0 },
-      uSun: { value: 0 },
+      uSun: { value: 1 },
     };
 
     const makeRays = (depth, order) => {
@@ -178,36 +181,24 @@ export default function GuideScene({ reducedMotion }) {
     let raf = 0;
     const frame = () => {
       raf = requestAnimationFrame(frame);
-      const { opening, logo, logoTurn } = sceneState;
-      const show = Math.max(opening, logo);
-      mount.style.opacity = show;
-      if (show < 0.001) return; // nothing to see: skip the render entirely
+      const { logo, logoTurn } = sceneState;
+      mount.style.opacity = logo;
+      if (logo < 0.001) return; // nothing to see: skip the render entirely
 
-      const t = performance.now() - start;
-      const seconds = reducedMotion ? 12 : t / 1000;
-      // the sun rises over the first few seconds, as on the site's landing
-      const sun = reducedMotion ? 1 : easeInOutCubic(clamp01((t - 400) / 3200));
+      const seconds = reducedMotion ? 12 : (performance.now() - start) / 1000;
       shared.uTime.value = seconds;
-      shared.uSun.value = sun;
 
       pointer.lerp(target, 0.06);
       pointerStrength += ((pointerIn ? 1 : 0) - pointerStrength) * 0.04;
       dustMat.uniforms.uMouse.value.copy(pointer);
-      dustMat.uniforms.uMouseStrength.value = pointerStrength * sun;
+      dustMat.uniforms.uMouseStrength.value = pointerStrength;
 
-      // the opening has the full sunbeams; the logo chapter keeps only a trace of them
-      const beams = opening + 0.25 * logo * (1 - opening);
+      const beams = BEAMS * logo;
       raysBack.material.uniforms.uGain.value = beams;
       raysFront.material.uniforms.uGain.value = 0.22 * beams;
       dustMat.uniforms.uRayVis.value = beams;
       dustMat.uniforms.uAmbient.value = 0.3 * logo;
 
-      key.position.set(LIGHT.keyX, LIGHT.keyY, LIGHT.keyZ);
-      key.intensity = LIGHT.keyIntensity * sun;
-      rim.intensity = 1.2 * sun;
-      glint.position.set(LIGHT.glintX, MARK_Y + LIGHT.glintY, LIGHT.glintZ);
-      glint.intensity = LIGHT.glintIntensity * sun * opening;
-      scene.environmentIntensity = LIGHT.environment * sun;
 
       if (!reducedMotion && finePointer) {
         const dx = pointer.x * camera.aspect;

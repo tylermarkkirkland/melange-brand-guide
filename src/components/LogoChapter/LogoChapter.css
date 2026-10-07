@@ -36,19 +36,18 @@
   gap: 24px;
 }
 
-/* a stage for each version: Void with a hairline, or the light ground */
+/* a stage for each version: Basalt (raised surface) or Ice (light ground) */
 .logo-variant__stage {
   height: 62vh;
   min-height: 420px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--slate);
+  background: var(--basalt);
 }
 
 .logo-variant__stage--ice {
   background: var(--ice);
-  border-color: var(--ice);
 }
 
 @media (max-width: 900px) {

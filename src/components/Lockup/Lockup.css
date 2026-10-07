@@ -10,7 +10,7 @@
   width: auto;
 }
 
-/* one-colour pillar: the vector mark used as a mask, filled with any colour */
+/* one-color pillar: the vector mark used as a mask, filled with any color */
 .lockup__pillar--flat {
   -webkit-mask: url('/logo/pillar-flat.svg') center / contain no-repeat;
   mask: url('/logo/pillar-flat.svg') center / contain no-repeat;

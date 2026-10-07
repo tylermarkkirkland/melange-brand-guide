@@ -1,20 +1,20 @@
-.colour__head {
+.color__head {
   display: flex;
   align-items: baseline;
   gap: 24px;
   margin-bottom: 64px;
 }
 
-.colour__label {
+.color__label {
   margin: 0 0 24px;
   color: var(--pewter);
 }
 
-.colour__head .colour__label {
+.color__head .color__label {
   margin: 0;
 }
 
-.colour__note {
+.color__note {
   margin: 0;
   color: var(--pewter);
 }
@@ -41,11 +41,6 @@
   display: flex;
   gap: 24px;
   color: var(--pewter);
-}
-
-.wash__label span {
-  color: inherit;
-  opacity: 0.8;
 }
 
 .wash__name p {
@@ -81,7 +76,7 @@
   gap: 16px;
 }
 
-/* each ground in its true colour; the current one is ringed */
+/* each ground in its true color; the current one is ringed */
 .wash__steps li {
   width: 32px;
   height: 32px;
@@ -137,9 +132,9 @@
   color: var(--silver);
 }
 
-.metal__ratio {
-  margin-bottom: 8px !important;
-  color: var(--pewter) !important;
+.metal__text .metal__ratio {
+  margin-bottom: 8px;
+  color: var(--pewter);
 }
 
 .metal__text .operational-body-sm {
@@ -182,9 +177,9 @@
   color: var(--silver);
 }
 
-.spice__ratio {
-  color: var(--pewter) !important;
-  margin-bottom: 8px !important;
+.spice .spice__ratio {
+  color: var(--pewter);
+  margin-bottom: 8px;
 }
 
 .spice .operational-body-sm {
@@ -237,48 +232,7 @@
   align-items: flex-end;
 }
 
-/* ---- rules ---- */
-.rules {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.rules__list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px 96px;
-}
-
-.rule {
-  border-top: 1px solid var(--slate);
-  padding-top: 24px;
-}
-
-.rule p {
-  margin: 0;
-}
-
-.rule__number {
-  display: block;
-  color: var(--pewter);
-  margin-bottom: 16px;
-}
-
-.rule .operational-title-sm {
-  color: var(--chrome);
-  margin-bottom: 8px;
-}
-
-.rule .operational-body {
-  color: var(--silver);
-  max-width: 34em;
-}
-
 @media (max-width: 900px) {
   .metals__row { grid-template-columns: 1fr 1fr; }
-  .spices__row, .rules__list { grid-template-columns: 1fr; }
+  .spices__row { grid-template-columns: 1fr; }
 }

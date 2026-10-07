@@ -6,7 +6,7 @@ import './Close.css';
 
 export default function Close() {
   return (
-    <section className="chapter-body close screen" aria-label="Close">
+    <section className="chapter-body close screen" id="close" aria-label="Close">
       <Reveal y={24}>
         <Lockup size={56} />
       </Reveal>

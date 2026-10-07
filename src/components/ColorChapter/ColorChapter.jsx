@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
-import { COLOUR, GROUND, METAL, SPICE, RULES } from '../../data/content.js';
+import { COLOR, GROUND, METAL, SPICE } from '../../data/content.js';
 import ChapterOpener from '../ChapterOpener/ChapterOpener.jsx';
+import RollingNumber from '../RollingNumber/RollingNumber.jsx';
 import { Reveal, EASE } from '../Reveal/Reveal.jsx';
-import './ColourChapter.css';
+import './ColorChapter.css';
 
 /* Grounds: the screen itself becomes each ground in turn as you scroll */
 function GroundWash() {
@@ -31,11 +32,11 @@ function GroundWash() {
   }, [ground.light]);
 
   return (
-    <section className="chapter-body wash" ref={ref} aria-label={COLOUR.groundLabel}>
+    <section className="chapter-body wash" ref={ref} aria-label={COLOR.groundLabel}>
       <motion.div className={`wash__pin${ground.light ? ' is-light' : ''}`} style={{ background }} ref={pinRef}>
         <p className="wash__label data-tag">
-          {COLOUR.groundLabel}
-          <span>{COLOUR.groundNote}</span>
+          {COLOR.groundLabel}
+          <span>{COLOR.groundNote}</span>
         </p>
 
         <div className="wash__name" aria-live="polite">
@@ -67,10 +68,10 @@ function GroundWash() {
 /* Metals: five columns rising like ingots, lightest last */
 function Metals() {
   return (
-    <section className="chapter-body screen metals" aria-label={COLOUR.metalLabel}>
-      <div className="colour__head">
-        <Reveal as="p" className="data-tag colour__label">{COLOUR.metalLabel}</Reveal>
-        <Reveal as="p" className="operational-body colour__note" delay={0.1}>{COLOUR.metalNote}</Reveal>
+    <section className="chapter-body screen metals" aria-label={COLOR.metalLabel}>
+      <div className="color__head">
+        <Reveal as="p" className="data-tag color__label">{COLOR.metalLabel}</Reveal>
+        <Reveal as="p" className="operational-body color__note" delay={0.1}>{COLOR.metalNote}</Reveal>
       </div>
       <ul className="metals__row">
         {METAL.map((m, i) => (
@@ -99,10 +100,10 @@ function Metals() {
 /* Spice: small, alone, with room around it */
 function Spices() {
   return (
-    <section className="chapter-body screen spices" aria-label={COLOUR.spiceLabel}>
-      <div className="colour__head">
-        <Reveal as="p" className="data-tag colour__label">{COLOUR.spiceLabel}</Reveal>
-        <Reveal as="p" className="operational-body colour__note" delay={0.1}>{COLOUR.spiceNote}</Reveal>
+    <section className="chapter-body screen spices" aria-label={COLOR.spiceLabel}>
+      <div className="color__head">
+        <Reveal as="p" className="data-tag color__label">{COLOR.spiceLabel}</Reveal>
+        <Reveal as="p" className="operational-body color__note" delay={0.1}>{COLOR.spiceNote}</Reveal>
       </div>
       <ul className="spices__row">
         {SPICE.map((s, i) => (
@@ -122,11 +123,18 @@ function Spices() {
 /* Coverage: 85 / 13 / 2, a ground always between metal and spice */
 function Coverage() {
   const fills = ['var(--slate)', 'var(--silver)', 'var(--spice)'];
+  const [inView, setInView] = useState(false);
   return (
-    <section className="chapter-body screen coverage" aria-label={COLOUR.coverageLabel}>
-      <Reveal as="p" className="data-tag colour__label">{COLOUR.coverageLabel}</Reveal>
+    <motion.section
+      className="chapter-body screen coverage"
+      aria-label={COLOR.coverageLabel}
+      onViewportEnter={() => setInView(true)}
+      onViewportLeave={() => setInView(false)}
+      viewport={{ amount: 0.5 }}
+    >
+      <Reveal as="p" className="data-tag color__label">{COLOR.coverageLabel}</Reveal>
       <div className="coverage__bar">
-        {COLOUR.coverage.map((c, i) => (
+        {COLOR.coverage.map((c, i) => (
           <motion.span
             key={c.label}
             className="coverage__segment"
@@ -139,35 +147,18 @@ function Coverage() {
         ))}
       </div>
       <div className="coverage__legend">
-        {COLOUR.coverage.map((c, i) => (
+        {COLOR.coverage.map((c, i) => (
           <Reveal key={c.label} className="coverage__item" style={{ flexGrow: c.value }} delay={0.4 + i * 0.35} y={8}>
-            <span className="data-figure">{c.value}%</span>
+            <span className="data-figure"><RollingNumber value={String(c.value)} suffix="%" active={inView} delay={400 + i * 350} /></span>
             <span className="data-tag">{c.label}</span>
           </Reveal>
         ))}
       </div>
-    </section>
+    </motion.section>
   );
 }
 
-function Rules() {
-  return (
-    <section className="chapter-body screen rules" aria-label={COLOUR.rulesLabel}>
-      <Reveal as="p" className="data-tag colour__label">{COLOUR.rulesLabel}</Reveal>
-      <ol className="rules__list">
-        {RULES.map((r, i) => (
-          <Reveal as="li" key={r.title} className="rule" delay={(i % 2) * 0.12} y={20}>
-            <span className="data-tag rule__number">{String(i + 1).padStart(2, '0')}</span>
-            <p className="operational-title-sm">{r.title}</p>
-            <p className="operational-body">{r.body}</p>
-          </Reveal>
-        ))}
-      </ol>
-    </section>
-  );
-}
-
-export default function ColourChapter({ chapter }) {
+export default function ColorChapter({ chapter }) {
   return (
     <div id={chapter.id} data-chapter={chapter.id}>
       <ChapterOpener number={chapter.number} title={chapter.title} />
@@ -175,7 +166,6 @@ export default function ColourChapter({ chapter }) {
       <Metals />
       <Spices />
       <Coverage />
-      <Rules />
     </div>
   );
 }

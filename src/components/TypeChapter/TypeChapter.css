@@ -11,19 +11,30 @@
   margin: 0;
 }
 
-.voice__label {
+.voice__head .voice__label {
   color: var(--pewter);
-  margin-bottom: 8px !important;
+  margin-bottom: 8px;
 }
 
 .voice__note {
   color: var(--silver);
 }
 
-.voice__intro {
-  margin-top: 32px !important;
-  max-width: 34em;
-  color: var(--silver-light);
+.voice__head .voice__intro {
+  margin-bottom: 64px;
+  max-width: 30em;
+  color: var(--chrome);
+}
+
+/* a state: ember, with a shape and a label, never color alone (rule 02) */
+.voice__status {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 12px;
+  border-radius: 50%;
+  background: var(--ember);
+  vertical-align: 1px;
 }
 
 .voice__styles {

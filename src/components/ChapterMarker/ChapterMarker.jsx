@@ -6,7 +6,7 @@ import './ChapterMarker.css';
 
 /**
  * The guide's only chrome: where you are ("02 / 05 Logo") top left, which opens
- * the chapter list, and the docked pillar top centre, which returns to the start.
+ * the chapter list, and the docked pillar top center, which returns to the start.
  * Hidden on the opening and the close.
  */
 export default function ChapterMarker({ onTravel }) {
@@ -62,7 +62,7 @@ export default function ChapterMarker({ onTravel }) {
             aria-controls="chapter-list"
             onClick={() => setOpen((o) => !o)}
           >
-            <span className="data-tag marker__count">{chapter.number} / {String(CHAPTERS.length).padStart(2, '0')}</span>
+            <span className="data-tag marker__count"><span className="ember-number">{chapter.number}</span> / {String(CHAPTERS.length).padStart(2, '0')}</span>
             <AnimatePresence mode="wait" initial={false}>
               <motion.span
                 key={chapter.id}
@@ -91,7 +91,7 @@ export default function ChapterMarker({ onTravel }) {
                 {CHAPTERS.map((c) => (
                   <li key={c.id}>
                     <button type="button" className={c.id === current ? 'is-current' : ''} onClick={() => go(c.id)}>
-                      <span className="data-tag">{c.number}</span>
+                      <span className={`data-tag${c.id === current ? ' ember-number' : ''}`}>{c.number}</span>
                       <span className="operational-body">{c.title}</span>
                     </button>
                   </li>

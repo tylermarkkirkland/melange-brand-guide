@@ -1,60 +1,105 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
-import { OPENING } from '../../data/content.js';
-import { sceneState } from '../../lib/sceneState.js';
-import { RevealWord, EASE } from '../Reveal/Reveal.jsx';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { CHAPTERS, OPENING } from '../../data/content.js';
+import { EASE } from '../Reveal/Reveal.jsx';
 import './Opening.css';
 
 /**
- * The site's landing, in miniature: sunlight finds the pillar, then the
- * name resolves beneath it. Scrolling away fades the scene out.
+ * The title slide: the talk begins here. Hairlines draw, the title rises out
+ * of its line, then the presenter and the contents. Each contents entry jumps
+ * to its chapter. Scrolling away fades the slide out.
  */
-export default function Opening({ reducedMotion }) {
-  const ref = useRef(null);
-  const [phase, setPhase] = useState(reducedMotion ? 2 : 0);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
+export default function Opening({ reducedMotion, onTravel }) {
+  const sectionRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] });
+  const fade = useTransform(scrollYProgress, [0, 0.42], [1, 0]); // gone before the first title card arrives
 
-  useEffect(() => {
-    if (reducedMotion) return undefined;
-    const a = setTimeout(() => setPhase(1), 2400); // the name, once the pillar is lit
-    const b = setTimeout(() => setPhase(2), 4400); // then the rest
-    return () => { clearTimeout(a); clearTimeout(b); };
-  }, [reducedMotion]);
-
-  useMotionValueEvent(scrollYProgress, 'change', (p) => {
-    sceneState.opening = Math.max(0, 1 - p * 1.6);
-  });
+  // one timeline, in seconds; reduced motion shows everything at once
+  const at = (delay, duration = 1.4) => (reducedMotion ? { duration: 0 } : { duration, ease: EASE, delay });
+  const rise = (delay) => ({ initial: { opacity: 0, y: 14 }, animate: { opacity: 1, y: 0 }, transition: at(delay) });
 
   return (
-    <section className="opening" ref={ref} id="top" aria-label="Melange Mercantile brand guide">
-      <motion.div className="opening__fade" style={{ opacity: useFade(scrollYProgress) }}>
-        <h1 className="opening__wordmark">
-          <RevealWord text={OPENING.wordmarkTop} className="opening__top" letterClassName="metal-text" stagger={0.11} shown={phase >= 1} />
-          <RevealWord text={OPENING.wordmarkBottom} className="opening__bottom" stagger={0.07} delay={0.9} shown={phase >= 1} />
-        </h1>
-        <motion.div
-          className="opening__foot"
-          initial={{ opacity: 0, y: 8 }}
-          animate={phase >= 2 ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
-          transition={{ duration: 1.8, ease: EASE }}
-        >
-          <p className="opening__label data-tag">
-            {OPENING.label}
-            <span className="opening__edition">{OPENING.edition}</span>
-          </p>
-          <span className="opening__cue" aria-hidden="true">
-            <span className="data-tag">{OPENING.cue}</span>
-            <span className="opening__cue-line" />
-          </span>
-        </motion.div>
+    <section className="opening" ref={sectionRef} id="top" aria-label={`${OPENING.company} ${OPENING.deck}`}>
+      <motion.div className="opening__slide" style={{ opacity: fade }}>
+        <header className="opening__head">
+          <motion.p className="opening__company data-tag" {...rise(0.3)}>
+            <img src="/logo/pillar-silver.png" alt="" />
+            {OPENING.company}
+          </motion.p>
+          <motion.p className="opening__edition data-tag" {...rise(0.4)}>
+            {OPENING.deck} <span aria-hidden="true">·</span> {OPENING.edition}
+          </motion.p>
+          <motion.span
+            className="opening__rule"
+            aria-hidden="true"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={at(0, 2.2)}
+          />
+        </header>
+
+        <div className="opening__title-block">
+          <h1 className="opening__title ceremonial-display">
+            {OPENING.titleLines.map((line, i) => (
+              <span className="opening__line" key={line}>
+                <motion.span
+                  className="opening__line-inner metal-text"
+                  initial={{ y: '105%' }}
+                  animate={{ y: '0%' }}
+                  transition={at(0.7 + i * 0.18, 1.8)}
+                >
+                  {line}
+                </motion.span>
+              </span>
+            ))}
+          </h1>
+          <motion.span
+            className="opening__stroke spice-stroke"
+            aria-hidden="true"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={at(1.3, 1.6)}
+          />
+          <motion.p className="opening__subtitle operational-body-lg" {...rise(1.5)}>
+            {OPENING.subtitle}
+          </motion.p>
+          <motion.p className="opening__presenter" {...rise(1.7)}>
+            <span className="data-tag">{OPENING.presenterLabel}</span>
+            <span className="operational-title-sm">{OPENING.presenter}</span>
+          </motion.p>
+        </div>
+
+        <motion.img
+          className="opening__mark"
+          src="/logo/pillar-silver.png"
+          alt=""
+          draggable="false"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={at(1.0, 2.4)}
+        />
+
+        <nav className="opening__contents" aria-label={OPENING.contentsLabel}>
+          <motion.span
+            className="opening__rule"
+            aria-hidden="true"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={at(1.6, 2.2)}
+          />
+          <motion.p className="opening__contents-label data-tag" {...rise(1.9)}>{OPENING.contentsLabel}</motion.p>
+          <ol style={{ '--count': CHAPTERS.length }}>
+            {CHAPTERS.map((c, i) => (
+              <motion.li key={c.id} {...rise(2.0 + i * 0.08)}>
+                <button type="button" onClick={() => onTravel(c.id)}>
+                  <span className="data-tag ember-number">{c.number}</span>
+                  <span className="operational-body">{c.title}</span>
+                </button>
+              </motion.li>
+            ))}
+          </ol>
+        </nav>
       </motion.div>
     </section>
   );
-}
-
-// words leave quickly, before the scene has gone
-function useFade(progress) {
-  const [o, setO] = useState(1);
-  useMotionValueEvent(progress, 'change', (p) => setO(Math.max(0, 1 - p * 2.4)));
-  return o;
 }

@@ -6,7 +6,7 @@ import './Lockup.css';
  * then MERCANTILE small and widely tracked (never below Cinzel's 24px floor).
  *
  * size     MELANGE's font size in px; the pillar and spacing scale from it
- * variant  'silver' (the main logo) or 'flat' (one colour, takes `color`)
+ * variant  'silver' (the main logo) or 'flat' (one color, takes `color`)
  * parts    'lockup' | 'mark'
  */
 export default function Lockup({ size = 72, variant = 'silver', color = 'var(--chrome)', parts = 'lockup', className = '' }) {
