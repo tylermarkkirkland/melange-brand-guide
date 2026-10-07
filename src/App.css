@@ -1,0 +1,122 @@
+:root {
+  /* ground */
+  --ink: #000000;
+  --void: #070a0c;
+  --basalt: #121a1f;
+  --slate: #1e2b33;
+  --ice: #e9eef0;
+  /* metal */
+  --pewter-dark: #5b5b5c; /* hairlines only, never text */
+  --pewter: #858789;
+  --silver: #98999b;
+  --silver-light: #aeafb1;
+  --chrome: #cfcfd1;
+  /* spice */
+  --rust: #9a3412; /* never text on dark */
+  --spice: #c2410c; /* large marks only */
+  --ember: #e8822b; /* the only spice that may carry meaning */
+
+  --font-ceremonial: 'Cinzel', serif;
+  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  /* the site's one easing: fast out, long settle */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --gutter: 56px; /* the site's page margin */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  background: var(--void);
+  color: var(--silver);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+:focus-visible {
+  outline: 1px solid var(--silver-light);
+  outline-offset: 4px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* The 14 text styles from the brand spec */
+.ceremonial-display { font: 400 72px/80px var(--font-ceremonial); letter-spacing: 0.12em; text-transform: uppercase; }
+.ceremonial-title { font: 400 48px/56px var(--font-ceremonial); letter-spacing: 0.14em; text-transform: uppercase; }
+.ceremonial-heading { font: 400 32px/40px var(--font-ceremonial); letter-spacing: 0.15em; text-transform: uppercase; }
+.ceremonial-label { font: 700 24px/32px var(--font-ceremonial); letter-spacing: 0.18em; text-transform: uppercase; }
+.operational-title-lg { font: 500 32px/40px var(--font-sans); }
+.operational-title { font: 500 24px/32px var(--font-sans); }
+.operational-title-sm { font: 500 20px/28px var(--font-sans); }
+.operational-body-lg { font: 400 18px/32px var(--font-sans); }
+.operational-body { font: 400 16px/28px var(--font-sans); }
+.operational-body-sm { font: 400 14px/24px var(--font-sans); }
+.operational-label { font: 500 12px/16px var(--font-sans); letter-spacing: 0.08em; text-transform: uppercase; }
+.data-figure { font: 500 20px/24px var(--font-mono); letter-spacing: 0.02em; }
+.data-row { font: 400 16px/24px var(--font-mono); letter-spacing: 0.04em; }
+.data-tag { font: 500 12px/16px var(--font-mono); letter-spacing: 0.16em; text-transform: uppercase; }
+
+/* the brushed-metal fill the site uses on MELANGE */
+.metal-text {
+  background: linear-gradient(180deg, #eef1f3 0%, var(--chrome) 45%, #8d9296 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* A plain content screen: gutters, vertical centring, room to breathe */
+.screen {
+  position: relative;
+  min-height: 100vh;
+  padding: 160px var(--gutter);
+  background: var(--void);
+}
+
+/* Chapter content sits above the pinned title cards it slides over */
+.chapter-body {
+  position: relative;
+  z-index: 2;
+}
+
+/* Fade to black for long jumps, as on the site */
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: var(--ink);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
+.curtain.is-closed {
+  opacity: 1;
+  pointer-events: auto;
+}

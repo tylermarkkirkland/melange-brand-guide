@@ -1,0 +1,14 @@
+.close {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 96px;
+  background: var(--ink); /* Ink is the logo's own ground */
+}
+
+.close__tagline {
+  margin: 0;
+  color: var(--pewter);
+  margin-right: -0.18em; /* optical centring: trailing tracking */
+}

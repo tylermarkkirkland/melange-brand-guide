@@ -1,0 +1,75 @@
+.voice {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 48px;
+  padding-top: 128px;
+  padding-bottom: 96px;
+}
+
+.voice__head p {
+  margin: 0;
+}
+
+.voice__label {
+  color: var(--pewter);
+  margin-bottom: 8px !important;
+}
+
+.voice__note {
+  color: var(--silver);
+}
+
+.voice__intro {
+  margin-top: 32px !important;
+  max-width: 34em;
+  color: var(--silver-light);
+}
+
+.voice__styles {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.voice__row {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  align-items: baseline;
+  gap: 48px;
+  padding: 14px 0;
+  border-top: 1px solid var(--slate);
+}
+
+.voice__sample {
+  color: var(--chrome);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.voice__spec {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--silver);
+}
+
+.voice__dim {
+  color: var(--pewter);
+}
+
+.type-notes {
+  padding: 0 var(--gutter) 160px;
+  background: var(--void);
+  max-width: calc(44em + var(--gutter) * 2);
+}
+
+.type-notes p {
+  margin: 0 0 12px;
+  color: var(--pewter);
+}
+
+@media (max-width: 900px) {
+  .voice__row { grid-template-columns: 1fr; gap: 8px; }
+}

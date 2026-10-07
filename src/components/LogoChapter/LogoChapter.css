@@ -1,0 +1,56 @@
+.logo-primary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 96px;
+}
+
+.logo__caption p {
+  margin: 0;
+}
+
+.logo__caption .data-tag {
+  color: var(--pewter);
+  margin-bottom: 8px;
+}
+
+.logo__caption .operational-body {
+  color: var(--silver);
+}
+
+.logo-primary .logo__caption {
+  text-align: center;
+}
+
+.logo-variants {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-content: center;
+}
+
+.logo-variant {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* a stage for each version: Void with a hairline, or the light ground */
+.logo-variant__stage {
+  height: 62vh;
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--slate);
+}
+
+.logo-variant__stage--ice {
+  background: var(--ice);
+  border-color: var(--ice);
+}
+
+@media (max-width: 900px) {
+  .logo-variants { grid-template-columns: 1fr; }
+}

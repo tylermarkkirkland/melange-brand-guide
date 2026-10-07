@@ -1,0 +1,92 @@
+.opening {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+}
+
+.opening__fade {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+/* Name sits just under the pillar, as on the site */
+.opening__wordmark {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 65vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  font-weight: 400;
+}
+
+.opening__top {
+  font-family: var(--font-ceremonial);
+  font-size: clamp(44px, 5.2vw, 84px);
+  line-height: 1;
+  letter-spacing: 0.24em;
+  margin-right: -0.24em;
+  white-space: nowrap;
+}
+
+.opening__bottom {
+  font-family: var(--font-ceremonial);
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: 0.62em;
+  margin-right: -0.62em;
+  color: var(--silver-light);
+  white-space: nowrap;
+}
+
+.opening__foot {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: 44px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: end;
+}
+
+.opening__label {
+  margin: 0;
+  color: var(--chrome);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.opening__edition {
+  color: var(--pewter);
+}
+
+.opening__cue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  color: var(--pewter);
+}
+
+.opening__cue-line {
+  width: 1px;
+  height: 56px;
+  background: linear-gradient(var(--pewter), transparent);
+  transform-origin: top;
+  animation: cue 2.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes cue {
+  0% { transform: scaleY(0); opacity: 1; }
+  60% { transform: scaleY(1); opacity: 1; }
+  100% { transform: scaleY(1); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .opening__cue-line { animation: none; }
+}
