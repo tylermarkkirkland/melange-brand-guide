@@ -70,7 +70,7 @@ Melange Mercantile is a **trading company licensed by CHOAM**, not a Great House
 
 ## Git
 
-Local repo only so far. If asked to publish, use Tyler's **personal** GitHub (`tylermarkkirkland`), never the work account: `GH_TOKEN=$(gh auth token --user tylermarkkirkland) gh repo create …` / `git push`. Repo-local identity is already set to `293983131+tylermarkkirkland@users.noreply.github.com`. Commit or push only when asked.
+Remote: **private** repo `tylermarkkirkland/melange-brand-guide` on Tyler's personal GitHub (created 2026-10-07), separate from the `melange-mercantile` website repo. Push with the personal account, never the work one: `GH_TOKEN=$(gh auth token --user tylermarkkirkland) git push`. Repo-local identity is already set to `293983131+tylermarkkirkland@users.noreply.github.com`. Commit or push only when asked.
 
 ## Open
 
