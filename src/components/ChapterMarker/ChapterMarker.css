@@ -75,13 +75,3 @@
 .marker__home:hover {
   opacity: 0.8;
 }
-
-/* over the Ice ground, the marker turns dark */
-.marker__count,
-.marker__title {
-  transition: color 0.6s ease;
-}
-
-[data-ground='light'] .marker__count { color: var(--slate); }
-[data-ground='light'] .marker__title { color: var(--basalt); }
-[data-ground='light'] .marker__count .ember-number { color: var(--rust); }

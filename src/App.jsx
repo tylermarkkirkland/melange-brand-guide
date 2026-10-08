@@ -59,39 +59,85 @@ export default function App() {
 
   // Presenting: → scrolls on to the next screen, ← back one, so every pin, turn and
   // reveal plays as if scrolled by hand (a clicker that sends arrows works too).
-  // Up/down still scroll freely; the chapter list keeps the fade-to-black jumps.
+  // Entering a chapter, → glides to its title, holds a beat, then carries on to the first
+  // page in the same press; pressing again during that skips straight to the page.
+  // ← steps back over title cards. Up/down still scroll freely; the chapter list keeps
+  // the fade-to-black jumps.
   useEffect(() => {
+    const TITLE_HOLD = 450; // ms on a chapter title before carrying on
     let heading = null; // where a key-started scroll is going, so quick presses keep stepping
+    let pending = null; // { to, timer } from the moment a press heads through a title until it carries on
+
+    const glideTo = (to, then) => {
+      const lenis = lenisRef.current;
+      heading = to;
+      if (!lenis) { window.scrollTo(0, to); heading = null; then?.(); return; }
+      // An even glide (in-out), not the fast-out UI curve, which would rush the scroll-driven
+      // scenes (logo turn, title reveals) into the first few frames. Longer trips take a little longer.
+      const screens = Math.abs(to - window.scrollY) / window.innerHeight;
+      lenis.scrollTo(to, {
+        duration: Math.min(2.6, 1.3 + screens * 0.5),
+        easing: glide,
+        force: true,
+        onComplete: () => { heading = null; then?.(); },
+      });
+    };
+
+    const cancelHold = () => { if (pending) { clearTimeout(pending.timer); pending = null; } };
+
+    // glide to a chapter title, hold a beat, then carry on to its first page
+    const throughTitle = (titleY, pageY) => {
+      const seq = { to: pageY, timer: null };
+      pending = seq;
+      glideTo(titleY, () => {
+        if (pending !== seq) return; // a later press already took over
+        seq.timer = setTimeout(() => { if (pending === seq) { pending = null; glideTo(pageY); } }, TITLE_HOLD);
+      });
+    };
+
     const onKey = (e) => {
       if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
       if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
       if (e.target.closest?.('input, textarea, select, [contenteditable="true"]')) return;
       if (traveling.current) return;
-      const lenis = lenisRef.current;
+      e.preventDefault();
+
+      // heading through a title (gliding to it or holding on it): → goes straight on to the page; ← stays put
+      if (pending) {
+        const { to } = pending;
+        cancelHold();
+        if (e.key === 'ArrowRight') glideTo(to);
+        return;
+      }
+
       const from = heading ?? window.scrollY;
       const stops = getStops();
-      const to = e.key === 'ArrowRight'
-        ? stops.find((y) => y > from + 4)
-        : [...stops].reverse().find((y) => y < from - 4);
-      if (to === undefined) return;
-      e.preventDefault();
-      if (!lenis) { window.scrollTo(0, to); return; }
-      heading = to;
-      // An even glide (in-out), not the fast-out UI curve, which would rush the scroll-driven
-      // scenes (logo turn, photo reveals) into the first few frames. Longer trips take a little longer.
-      const screens = Math.abs(to - window.scrollY) / window.innerHeight;
-      lenis.scrollTo(to, { duration: Math.min(2.6, 1.3 + screens * 0.5), easing: glide, force: true, onComplete: () => { heading = null; } });
+      if (e.key === 'ArrowLeft') {
+        const back = [...stops].reverse().find((s) => s.y < from - 4 && !s.title);
+        if (back) glideTo(back.y);
+        return;
+      }
+      const i = stops.findIndex((s) => s.y > from + 4);
+      if (i < 0) return;
+      const next = stops[i];
+      const after = stops[i + 1];
+      if (next.title && after && !reducedMotion) {
+        throughTitle(next.y, after.y);
+        return;
+      }
+      glideTo(next.title && after ? after.y : next.y);
     };
-    const forget = () => { heading = null; }; // the reader took over with the wheel or touch
+    const forget = () => { heading = null; cancelHold(); }; // the reader took over with the wheel or touch
     window.addEventListener('keydown', onKey);
     window.addEventListener('wheel', forget, { passive: true });
     window.addEventListener('touchstart', forget, { passive: true });
     return () => {
+      cancelHold();
       window.removeEventListener('keydown', onKey);
       window.removeEventListener('wheel', forget);
       window.removeEventListener('touchstart', forget);
     };
-  }, []);
+  }, [reducedMotion]);
 
   return (
     <MotionConfig reducedMotion="user">

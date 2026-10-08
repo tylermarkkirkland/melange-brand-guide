@@ -1,190 +1,85 @@
-.color__head {
-  display: flex;
-  align-items: baseline;
-  gap: 24px;
-  margin-bottom: 64px;
-}
-
 .color__label {
   margin: 0 0 24px;
   color: var(--pewter);
 }
 
-.color__head .color__label {
-  margin: 0;
-}
-
-.color__note {
-  margin: 0;
-  color: var(--pewter);
-}
-
-/* ---- grounds ---- */
-.wash {
-  height: 500vh; /* one screen per ground */
-}
-
-.wash__pin {
-  position: sticky;
-  top: 0;
+/* ---- the palette: every color on one page, a tall column each ---- */
+.screen.palette {
   height: 100vh;
-  padding: 120px var(--gutter) 64px;
+  min-height: 640px;
+  padding-top: 136px;
+  padding-bottom: 64px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  color: var(--silver);
-  transition: color 0.6s ease;
+  gap: 40px;
 }
 
-.wash__label {
+.palette__head p {
   margin: 0;
-  display: flex;
-  gap: 24px;
+}
+
+.palette__head .palette__label {
   color: var(--pewter);
-}
-
-.wash__name p {
-  margin: 0;
-}
-
-.wash__name .operational-title-lg {
-  color: var(--chrome);
-  margin-bottom: 16px;
-}
-
-.wash__name .data-figure {
-  color: var(--silver-light);
   margin-bottom: 8px;
 }
 
-/* on Ice the words turn dark: Basalt and Slate read on the light ground */
-.wash__pin.is-light,
-.wash__pin.is-light .wash__label {
-  color: var(--slate);
+.palette__intro {
+  color: var(--chrome);
+  max-width: 40em;
 }
 
-.wash__pin.is-light .wash__name .operational-title-lg,
-.wash__pin.is-light .wash__name .data-figure {
-  color: var(--basalt);
-}
-
-.wash__steps {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  gap: 16px;
-}
-
-/* each ground in its true color; the current one is ringed */
-.wash__steps li {
-  width: 32px;
-  height: 32px;
-  outline: 1px solid transparent;
-  outline-offset: 4px;
-  box-shadow: inset 0 0 0 1px rgba(133, 135, 137, 0.35);
-  transition: outline-color 0.6s ease;
-}
-
-.wash__steps li.is-current {
-  outline-color: var(--pewter);
-}
-
-/* ---- metals ---- */
-.metals {
-  display: flex;
-  flex-direction: column;
-}
-
-.metals__row {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+/* 5 ground · spacer · 5 metal · spacer · 3 spice; rows: group label, swatch, note */
+.palette__grid {
   flex: 1;
+  min-height: 0;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) 20px repeat(5, minmax(0, 1fr)) 20px repeat(3, minmax(0, 1fr));
+  grid-template-rows: auto minmax(80px, 1fr) auto;
+  column-gap: 10px;
+  row-gap: 16px;
 }
 
-.metal {
+.palette__group-label {
+  grid-row: 1;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 2px;
 }
 
-.metal__bar {
+.palette__group-label .data-tag { color: var(--silver-light); }
+.palette__group-label .operational-body-sm { color: var(--pewter); }
+
+.swatch {
+  grid-row: 2 / span 2;
+  display: grid;
+  grid-template-rows: subgrid; /* chip in the tall row, note in the row below, shared across all 13 */
+  min-height: 0;
+}
+
+.swatch__chip {
   display: block;
-  height: 46vh;
-  min-height: 280px;
+  min-height: 0;
   transform-origin: bottom;
 }
 
-.metal__text p {
+/* the darkest grounds would vanish into the page without a faint edge */
+.swatch__chip--ground {
+  box-shadow: inset 0 0 0 1px rgba(133, 135, 137, 0.25);
+}
+
+.swatch__text {
+  padding-top: 14px;
+}
+
+.swatch__text p {
   margin: 0;
 }
 
-.metal__text .operational-title-sm {
-  color: var(--chrome);
-  margin-bottom: 8px;
-}
-
-.metal__text .data-row {
-  color: var(--silver);
-}
-
-.metal__text .metal__ratio {
-  margin-bottom: 8px;
-  color: var(--pewter);
-}
-
-.metal__text .operational-body-sm {
-  color: var(--pewter);
-}
-
-/* ---- spice ---- */
-.spices {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.spices__row {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 320px));
-  gap: 96px;
-}
-
-.spice p {
-  margin: 0;
-}
-
-.spice__chip {
-  display: block;
-  width: 96px;
-  height: 96px;
-  margin-bottom: 32px;
-}
-
-.spice .operational-title-sm {
-  color: var(--chrome);
-  margin-bottom: 8px;
-}
-
-.spice .data-row {
-  color: var(--silver);
-}
-
-.spice .spice__ratio {
-  color: var(--pewter);
-  margin-bottom: 8px;
-}
-
-.spice .operational-body-sm {
-  color: var(--pewter);
-}
+.swatch .swatch__name { color: var(--chrome); font-weight: 500; }
+.swatch .swatch__hex { color: var(--silver); }
+.swatch .swatch__ratio { color: var(--pewter); margin-top: 4px; }
+.swatch .swatch__use { color: var(--silver); margin-top: 8px; }
 
 /* ---- coverage ---- */
 .coverage {
@@ -232,7 +127,14 @@
   align-items: flex-end;
 }
 
+@media (max-height: 800px) and (min-width: 901px) {
+  .screen.palette { padding-top: 112px; padding-bottom: 40px; gap: 24px; }
+}
+
 @media (max-width: 900px) {
-  .metals__row { grid-template-columns: 1fr 1fr; }
-  .spices__row { grid-template-columns: 1fr; }
+  .screen.palette { height: auto; }
+  .palette__grid { grid-template-columns: repeat(5, minmax(0, 1fr)); grid-template-rows: none; }
+  .palette__group-label, .swatch { grid-column: auto !important; grid-row: auto; }
+  .palette__group-label { grid-column: 1 / -1 !important; }
+  .swatch { grid-template-rows: 120px auto; }
 }

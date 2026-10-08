@@ -1,29 +1,73 @@
-.voice {
+/* Typography: one page. The intro, then three columns, one per voice */
+.screen.type {
+  height: 100vh;
+  min-height: 640px;
+  padding-top: 136px;
+  padding-bottom: 64px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   gap: 48px;
-  padding-top: 128px;
-  padding-bottom: 96px;
 }
 
-.voice__head p {
+.type__intro {
+  margin: 0;
+  max-width: 40em;
+  color: var(--chrome);
+}
+
+.type__voices {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 48px;
+}
+
+.voice {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--slate);
+  padding-top: 20px;
+}
+
+.voice p {
   margin: 0;
 }
 
-.voice__head .voice__label {
+.voice .voice__label {
   color: var(--pewter);
-  margin-bottom: 8px;
 }
 
-.voice__note {
+/* the face itself, large: the one specimen that isn't a text style */
+.voice .type-glyph {
+  margin-top: 24px;
+  font-size: 120px;
+  line-height: 1;
+  color: var(--chrome);
+}
+
+.type-glyph--cinzel { font-family: var(--font-ceremonial); letter-spacing: 0.06em; }
+.type-glyph--sans { font-family: var(--font-sans); font-weight: 500; }
+.type-glyph--mono { font-family: var(--font-mono); font-weight: 500; }
+
+.voice .voice__note {
+  margin-top: 24px;
+  max-width: 26em;
   color: var(--silver);
 }
 
-.voice__head .voice__intro {
-  margin-bottom: 64px;
-  max-width: 30em;
+.voice__samples {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   color: var(--chrome);
+}
+
+.voice .voice__sample.operational-body {
+  color: var(--silver);
+  max-width: 26em;
 }
 
 /* a state: ember, with a shape and a label, never color alone (rule 02) */
@@ -37,50 +81,31 @@
   vertical-align: 1px;
 }
 
-.voice__styles {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.voice__row {
-  display: grid;
-  grid-template-columns: 1fr 360px;
-  align-items: baseline;
-  gap: 48px;
-  padding: 14px 0;
-  border-top: 1px solid var(--slate);
-}
-
-.voice__sample {
-  color: var(--chrome);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.voice__spec {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  color: var(--silver);
-}
-
-.voice__dim {
+.voice .voice__alphabet {
+  margin-top: auto;
+  padding-top: 24px;
+  font-size: 16px;
+  line-height: 28px;
+  letter-spacing: 0.04em;
   color: var(--pewter);
+  overflow-wrap: anywhere;
 }
 
-.type-notes {
-  padding: 0 var(--gutter) 160px;
-  background: var(--void);
-  max-width: calc(44em + var(--gutter) * 2);
+/* Cinzel's floor is 24px, so its alphabet is set at the floor */
+.voice .voice__alphabet.type-glyph--cinzel {
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: 0.12em;
 }
 
-.type-notes p {
-  margin: 0 0 12px;
-  color: var(--pewter);
+@media (max-height: 800px) and (min-width: 901px) {
+  .screen.type { padding-top: 112px; padding-bottom: 40px; gap: 32px; }
+  .voice .type-glyph { font-size: 88px; margin-top: 16px; }
+  .voice__samples { margin-top: 20px; gap: 10px; }
+  .voice .voice__note { margin-top: 16px; }
 }
 
 @media (max-width: 900px) {
-  .voice__row { grid-template-columns: 1fr; gap: 8px; }
+  .screen.type { height: auto; }
+  .type__voices { grid-template-columns: 1fr; }
 }

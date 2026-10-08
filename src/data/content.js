@@ -47,40 +47,41 @@ export const PROCESS = {
     title: 'Moodboard',
     intro: 'I pulled together brands, buildings, film stills and websites that had the feeling I was after: dark, quiet, expensive and a little mysterious.',
     keywords: ['Monolithic', 'Sacred', 'Elite', 'Timeless', 'Ceremonial', 'Strategic', 'Mysterious'],
-    // three columns of different widths, so the board never reads as a grid
+    // three columns of different widths, so the board never reads as a grid.
+    // Listed bottom-up on purpose: the glide comes to rest on the last few, Tyler's favorites.
     columns: [
       [
-        m('mood-05', 'Two figures with a torch before a huge shape in orange haze', 1277, 533),
-        m('board-01', 'A shopping bag with a red wordmark', 359, 261),
-        m('mood-09', 'Giant stone pillars rising from mist', 552, 981),
-        site('web-thorgal-1', 'thorgal.com', 'Side nav and layered parallax', 'Thorgal website: a red desert scene with floating rocks and a dotted side navigation'),
-        m('board-07', 'Close-up of a wind-rippled sand dune', 359, 315),
-        m('mood-03', 'A woman in a dark cloak against curved black walls', 637, 425),
-        site('web-dich-1', 'dich-fashion.webflow.io', 'Big type that builds in as you scroll', 'DICH Fashion website: huge black display type over clouds and a copper figure'),
-        m('board-10', 'A dark textured card with a spaced-out wordmark', 329, 212),
         site('web-rr-2', 'rolls-roycemotorcars.com', 'Scroll transitions between big images', 'Rolls-Royce website: a close-up of a black car door as the next image slides up beneath it'),
+        m('board-10', 'A dark textured card with a spaced-out wordmark', 329, 212),
+        site('web-dich-1', 'dich-fashion.webflow.io', 'Big type that builds in as you scroll', 'DICH Fashion website: huge black display type over clouds and a copper figure'),
+        m('mood-03', 'A woman in a dark cloak against curved black walls', 637, 425),
+        m('board-07', 'Close-up of a wind-rippled sand dune', 359, 315),
+        site('web-thorgal-1', 'thorgal.com', 'Side nav and layered parallax', 'Thorgal website: a red desert scene with floating rocks and a dotted side navigation'),
+        m('mood-09', 'Giant stone pillars rising from mist', 552, 981),
+        m('board-01', 'A shopping bag with a red wordmark', 359, 261),
+        m('mood-05', 'Two figures with a torch before a huge shape in orange haze', 1277, 533),
       ],
       [
-        m('board-02', 'A black monogram logo on white paper', 359, 261),
-        m('mood-still-2', 'A tiny figure at the foot of a glowing monolith', 736, 920),
-        site('web-igloo-2', 'igloo.inc', 'One big object, with data that rolls up as you scroll', 'Igloo website: a glowing igloo of stone blocks on a snowy ridge, with small numbered data points'),
-        m('board-08', 'A faceted crystal decanter with amber liquid', 359, 315),
-        m('mood-06', 'A lone figure in a dark corridor under a shaft of light', 547, 973),
-        site('web-noth-1', 'noth.in', 'How content appears', 'Nothin’ website: offset project images on black'),
-        m('ref-seals', 'A chart of red wax seals for the houses of Dune', 450, 450),
-        m('board-03', 'A minimal wordmark for a desert resort', 357, 261),
         m('mood-02', 'An army in formation before a towering structure', 637, 358),
+        m('board-03', 'A minimal wordmark for a desert resort', 357, 261),
+        m('ref-seals', 'A chart of red wax seals for the houses of Dune', 450, 450),
+        site('web-noth-1', 'noth.in', 'How content appears', 'Nothin’ website: offset project images on black'),
+        m('mood-06', 'A lone figure in a dark corridor under a shaft of light', 547, 973),
+        m('board-08', 'A faceted crystal decanter with amber liquid', 359, 315),
+        site('web-igloo-2', 'igloo.inc', 'One big object, with data that rolls up as you scroll', 'Igloo website: a glowing igloo of stone blocks on a snowy ridge, with small numbered data points'),
+        m('mood-still-2', 'A tiny figure at the foot of a glowing monolith', 736, 920),
+        m('board-02', 'A black monogram logo on white paper', 359, 261),
       ],
       [
-        m('mood-12', 'Rows of soldiers before a stepped temple with banners', 784, 1045),
-        site('web-spacex-1', 'spacex.com', 'Huge images and video, very little text', 'SpaceX website: an aerial shot of a rocket launch filling the screen, with a short title'),
-        m('mood-still-1', 'A cloaked figure facing a vast ship in mist', 1000, 742),
-        m('board-06', 'A warm, brutalist living room with tall windows', 359, 315),
-        site('web-igloo-1', 'igloo.inc', 'Simple, large objects on screen', 'Igloo website: a wireframe igloo floating in a web of white lines and numbers'),
-        site('web-dich-2', 'dich-fashion.webflow.io', 'Scroll and text animations', 'DICH Fashion website: an Our Mission headline beside a dark stone ringed by orbits'),
-        m('mood-13', 'A black monolith standing in fog', 530, 800),
-        m('board-11', 'A fashion poster with a bold serif wordmark', 329, 212),
         site('web-rr-1', 'rolls-roycemotorcars.com', 'Large imagery, calm and simple like SpaceX', 'Rolls-Royce website: a dark full-screen video hero with a thin uppercase title'),
+        m('board-11', 'A fashion poster with a bold serif wordmark', 329, 212),
+        m('mood-13', 'A black monolith standing in fog', 530, 800),
+        site('web-dich-2', 'dich-fashion.webflow.io', 'Scroll and text animations', 'DICH Fashion website: an Our Mission headline beside a dark stone ringed by orbits'),
+        site('web-igloo-1', 'igloo.inc', 'Simple, large objects on screen', 'Igloo website: a wireframe igloo floating in a web of white lines and numbers'),
+        m('board-06', 'A warm, brutalist living room with tall windows', 359, 315),
+        m('mood-still-1', 'A cloaked figure facing a vast ship in mist', 1000, 742),
+        site('web-spacex-1', 'spacex.com', 'Huge images and video, very little text', 'SpaceX website: an aerial shot of a rocket launch filling the screen, with a short title'),
+        m('mood-12', 'Rows of soldiers before a stepped temple with banners', 784, 1045),
       ],
     ],
   },
@@ -110,11 +111,11 @@ export const PROCESS = {
     phase: 'Phase 4 · Visual identity',
     title: 'Gold or silver',
     options: [
-      { label: 'Gold', note: 'Where I started', src: '/process/mockups-gold-sheet.webp', alt: 'The brand in gold across a flag, banner, plaque, seal, crate, tag, coin, certificate and sack' },
+      { label: 'Gold', note: 'Tried first', src: '/process/mockups-gold-sheet.webp', alt: 'The brand in gold across a flag, banner, plaque, seal, crate, tag, coin, certificate and sack' },
       { label: 'Silver', note: 'Where I landed', src: '/process/mockups-silver-sheet.webp', alt: 'The same applications in silver', chosen: true },
     ],
     chosenLabel: 'Chosen',
-    line: 'I was sure this brand would be gold, so that’s what I made my first assets in. Once I tried silver, I liked it better and it fit the brand better, so I switched to silver and black.',
+    line: 'I tried it in gold first because I thought it might look cool. After more brand defining, looking at other examples and trying silver, I decided silver worked better with the direction I wanted for the brand.',
   },
 };
 
@@ -158,16 +159,18 @@ export const METAL = [
 ];
 
 export const SPICE = [
-  { name: 'Rust', hex: '#9A3412', ratio: '2.7:1', use: 'The pigment — fills, seals, print, light grounds. Never text on dark.' },
-  { name: 'Spice', hex: '#C2410C', ratio: '3.8:1', use: 'The signature — large marks and large text only, never body copy.' },
-  { name: 'Ember', hex: '#E8822B', ratio: '7.2:1 AAA', use: 'The glow — the only spice value allowed to carry meaning.' },
+  { name: 'Rust', hex: '#9A3412', ratio: '2.7:1', use: 'Fills, seals and print. Never text on dark.' },
+  { name: 'Spice', hex: '#C2410C', ratio: '3.8:1', use: 'Large marks and large text only.' },
+  { name: 'Ember', hex: '#E8822B', ratio: '7.2:1 AAA', use: 'The only spice that can carry meaning.' },
 ];
 
 export const COLOR = {
+  paletteLabel: 'The palette',
+  paletteIntro: 'Cool, dark backgrounds, metal pulled from the logo, and a little spice.',
   groundLabel: 'Ground',
   groundNote: 'Cool, dark backgrounds',
   metalLabel: 'Metal',
-  metalNote: 'Pulled from the logo’s metal · contrast against the background',
+  metalNote: 'From the logo’s metal',
   spiceLabel: 'Spice',
   spiceNote: 'Used sparingly',
   coverageLabel: 'Coverage',
@@ -180,52 +183,49 @@ export const COLOR = {
 
 export const TYPE = {
   intro: 'Two kinds of type with a clear line between them. Cinzel is for the logo and big moments. Plex is for everything people actually read.',
-  scaleNote: 'Sizes step up in 8s, with 4 for in-between sizes, so everything lines up on the same grid.',
-  // The 14 styles from the spec, grouped by voice. `sample` is what each line shows.
+  // One column per voice: the typeface, what it's for, and a few real examples
   voices: [
     {
       id: 'ceremonial',
-      label: 'Ceremonial · Cinzel',
       voice: 'Ceremonial',
       font: 'Cinzel',
-      note: 'Capitals only, never smaller than 24px, never for paragraphs.',
-      styles: [
-        { name: 'ceremonial/display', className: 'ceremonial-display', spec: 'Regular · 72 / 80 · 12%', sample: 'Melange' },
-        { name: 'ceremonial/title', className: 'ceremonial-title', spec: 'Regular · 48 / 56 · 14%', sample: 'Certified reserve' },
-        { name: 'ceremonial/heading', className: 'ceremonial-heading', spec: 'Regular · 32 / 40 · 15%', sample: 'Charter of trade' },
-        { name: 'ceremonial/label', className: 'ceremonial-label', spec: 'Bold · 24 / 32 · 18%', sample: 'Spice · Trade · Influence' },
+      glyph: 'MM',
+      glyphClass: 'type-glyph--cinzel',
+      note: 'The logo and big moments. Capitals only, never smaller than 24px, never for paragraphs.',
+      samples: [
+        { className: 'ceremonial-title', text: 'Certified reserve' },
+        { className: 'ceremonial-label', text: 'Charter of trade' },
       ],
+      alphabet: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
     },
     {
       id: 'operational',
-      label: 'Operational · IBM Plex Sans',
       voice: 'Operational',
       font: 'IBM Plex Sans',
+      glyph: 'Aa',
+      glyphClass: 'type-glyph--sans',
       note: 'Anything people need to read or click. Normal sentence case.',
-      styles: [
-        { name: 'operational/title-lg', className: 'operational-title-lg', spec: 'Medium · 32 / 40', sample: 'Consignment manifest' },
-        { name: 'operational/title', className: 'operational-title', spec: 'Medium · 24 / 32', sample: 'Authentication at origin' },
-        { name: 'operational/title-sm', className: 'operational-title-sm', spec: 'Medium · 20 / 28', sample: 'Transit under charter' },
-        { name: 'operational/body-lg', className: 'operational-body-lg', spec: 'Regular · 18 / 32 ★', sample: 'Long-form reading and introductions.' },
-        { name: 'operational/body', className: 'operational-body', spec: 'Regular · 16 / 28', sample: 'Default body text for sustained reading.' },
-        { name: 'operational/body-sm', className: 'operational-body-sm', spec: 'Regular · 14 / 24 ★', sample: 'Captions and secondary detail.' },
-        { name: 'operational/label', className: 'operational-label', spec: 'Medium · 12 / 16 · 8%', sample: 'Consignment reference' },
+      samples: [
+        { className: 'operational-title-lg', text: 'Consignment manifest' },
+        { className: 'operational-body', text: 'Every consignment is assayed at origin and travels under seal until it reaches the House that ordered it.' },
       ],
+      alphabet: 'Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm',
     },
     {
       id: 'data',
-      label: 'Data · IBM Plex Mono',
       voice: 'Data',
       font: 'IBM Plex Mono',
+      glyph: '01',
+      glyphClass: 'type-glyph--mono',
       note: 'Codes, numbers and statuses.',
-      styles: [
-        { name: 'data/figure', className: 'data-figure', spec: 'Medium · 20 / 24 · 2%', sample: '99.4%', figure: '99.4' },
-        { name: 'data/row', className: 'data-row', spec: 'Regular · 16 / 24 · 4%', sample: 'MM-114-Δ  ·  12.480 kg' },
-        { name: 'data/tag', className: 'data-tag', spec: 'Medium · 12 / 16 · 16%', sample: 'Guarantee active', status: true },
+      samples: [
+        { className: 'data-figure', figure: '99.4', suffix: '%' },
+        { className: 'data-row', text: 'MM-114-Δ  ·  12.480 kg' },
+        { className: 'data-tag', text: 'Guarantee active', status: true },
       ],
+      alphabet: '0123456789  #  %  ·  Δ',
     },
   ],
-  footnote: '★ The two exceptions to the grid: Plex needs 14 and 18px to stay easy to read.',
 };
 
 // Taken from the website: its photographs and the grade every one of them shares

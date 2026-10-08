@@ -1,33 +1,28 @@
-// The "pages" the arrow keys step through, as scroll positions, measured fresh on
-// each press so they follow the layout. Each is where that screen is fully in place:
-//   title slide · each chapter title card (pinned, title shown) · each content screen ·
-//   each ground in the color wash · each photograph, fully opened · the close
-// Screens taller than the window get extra stops so → scrolls through them.
+// The "pages" the arrow keys step through, as scroll positions, measured fresh on each
+// press so they follow the layout: the title slide, each chapter's title card (pinned,
+// title shown), each content screen, and the close. Screens taller than the window get
+// extra stops so → scrolls through them.
+// Each stop is { y, title }; `title` marks a chapter title card, which → passes through
+// with a short hold rather than stopping on (see App.jsx).
 export function getStops() {
   const vh = window.innerHeight;
   const top = (el) => el.getBoundingClientRect().top + window.scrollY;
-  const stops = [0];
+  const stops = [{ y: 0 }];
 
   // a little into each title card: pinned and revealed, before it starts to dim
-  document.querySelectorAll('.opener').forEach((el) => stops.push(top(el) + vh * 0.1));
-  document.querySelectorAll('.screen, .plate').forEach((el) => {
-    stops.push(top(el));
-    // a screen taller than the window (the moodboard) gets a stop for each window-full, ending on its last
+  document.querySelectorAll('.opener').forEach((el) => stops.push({ y: top(el) + vh * 0.1, title: true }));
+  document.querySelectorAll('.screen').forEach((el) => {
+    stops.push({ y: top(el) });
     const extra = el.offsetHeight - vh;
     if (extra > vh * 0.25) {
       const steps = Math.ceil(extra / (vh * 0.85));
-      for (let i = 1; i <= steps; i++) stops.push(top(el) + (extra * i) / steps);
+      for (let i = 1; i <= steps; i++) stops.push({ y: top(el) + (extra * i) / steps });
     }
-  });
-  // the wash pins for one screen per ground; each step lands exactly on a ground
-  document.querySelectorAll('.wash').forEach((el) => {
-    const steps = Math.round((el.offsetHeight - vh) / vh);
-    for (let i = 0; i <= steps; i++) stops.push(top(el) + i * vh);
   });
 
   const max = document.documentElement.scrollHeight - vh;
   return stops
-    .map((y) => Math.round(Math.min(max, Math.max(0, y))))
-    .sort((a, b) => a - b)
-    .filter((y, i, all) => i === 0 || y - all[i - 1] > 8);
+    .map((s) => ({ ...s, y: Math.round(Math.min(max, Math.max(0, s.y))) }))
+    .sort((a, b) => a.y - b.y)
+    .filter((s, i, all) => i === 0 || s.y - all[i - 1].y > 8);
 }
