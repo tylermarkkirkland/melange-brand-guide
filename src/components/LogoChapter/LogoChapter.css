@@ -1,11 +1,3 @@
-.logo-primary {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 96px;
-}
-
 .logo__caption p {
   margin: 0;
 }
@@ -19,27 +11,41 @@
   color: var(--silver);
 }
 
-.logo-primary .logo__caption {
-  text-align: center;
+/* Logo use: a short title, then the two versions side by side, filling the screen */
+.screen.logo-use {
+  height: 100vh;
+  min-height: 560px;
+  padding-top: 136px;
+  padding-bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.logo-use__title {
+  margin: 0;
+  color: var(--chrome);
 }
 
 .logo-variants {
+  flex: 1;
+  min-height: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 40px;
-  align-content: center;
 }
 
 .logo-variant {
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
 }
 
 /* a stage for each version: Basalt (raised surface) or Ice (light ground) */
 .logo-variant__stage {
-  height: 62vh;
-  min-height: 420px;
+  flex: 1;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -50,6 +56,12 @@
   background: var(--ice);
 }
 
+@media (max-height: 800px) and (min-width: 901px) {
+  .screen.logo-use { padding-top: 112px; padding-bottom: 48px; gap: 28px; }
+}
+
 @media (max-width: 900px) {
+  .screen.logo-use { height: auto; }
   .logo-variants { grid-template-columns: 1fr; }
+  .logo-variant__stage { height: 50vh; flex: none; }
 }

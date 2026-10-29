@@ -6,10 +6,6 @@
   background: var(--void);
 }
 
-.opener--clear {
-  background: transparent;
-}
-
 .opener__pin {
   position: sticky;
   top: 0;

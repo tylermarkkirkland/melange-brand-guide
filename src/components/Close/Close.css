@@ -9,6 +9,6 @@
 
 .close__tagline {
   margin: 0;
-  color: var(--spice); /* large text only: Cinzel 24px bold */
+  color: var(--ember);
   margin-right: -0.18em; /* optical centring: trailing tracking */
 }

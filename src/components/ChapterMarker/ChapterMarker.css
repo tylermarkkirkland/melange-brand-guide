@@ -58,20 +58,3 @@
 }
 
 /* the docked pillar: 46px tall, centered 64px from the top, as on the site */
-.marker__home {
-  position: absolute;
-  top: 41px;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 46px;
-  transition: opacity 0.4s ease;
-}
-
-.marker__home img {
-  height: 46px;
-  width: auto;
-}
-
-.marker__home:hover {
-  opacity: 0.8;
-}

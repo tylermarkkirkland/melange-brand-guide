@@ -3,18 +3,15 @@ import Lenis from 'lenis';
 import { MotionConfig } from 'framer-motion';
 import { CHAPTERS } from './data/content.js';
 import { getStops } from './lib/stops.js';
-import GuideScene from './components/GuideScene/GuideScene.jsx';
 import Opening from './components/Opening/Opening.jsx';
 import ChapterMarker from './components/ChapterMarker/ChapterMarker.jsx';
 import ProcessChapter from './components/ProcessChapter/ProcessChapter.jsx';
-import BrandChapter from './components/BrandChapter/BrandChapter.jsx';
 import LogoChapter from './components/LogoChapter/LogoChapter.jsx';
 import ColorChapter from './components/ColorChapter/ColorChapter.jsx';
 import TypeChapter from './components/TypeChapter/TypeChapter.jsx';
-import ImageryChapter from './components/ImageryChapter/ImageryChapter.jsx';
 import Close from './components/Close/Close.jsx';
 
-const [process, brand, logo, color, type, imagery] = CHAPTERS;
+const [process, logo, color, type] = CHAPTERS;
 
 // ≈ cubic-bezier(0.65, 0, 0.35, 1), the in-out curve the guide uses for its scroll cue
 const glide = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
@@ -62,7 +59,7 @@ export default function App() {
   // Entering a chapter, → glides to its title, holds a beat, then carries on to the first
   // page in the same press; pressing again during that skips straight to the page.
   // ← steps back over title cards. Up/down still scroll freely; the chapter list keeps
-  // the fade-to-black jumps.
+  // the fade-to-black jumps, and Home fades back to the title slide.
   useEffect(() => {
     const TITLE_HOLD = 450; // ms on a chapter title before carrying on
     let heading = null; // where a key-started scroll is going, so quick presses keep stepping
@@ -96,11 +93,13 @@ export default function App() {
     };
 
     const onKey = (e) => {
-      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft' && e.key !== 'Home') return;
       if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
       if (e.target.closest?.('input, textarea, select, [contenteditable="true"]')) return;
       if (traveling.current) return;
       e.preventDefault();
+
+      if (e.key === 'Home') { cancelHold(); heading = null; travel('top'); return; }
 
       // heading through a title (gliding to it or holding on it): → goes straight on to the page; ← stays put
       if (pending) {
@@ -137,20 +136,17 @@ export default function App() {
       window.removeEventListener('wheel', forget);
       window.removeEventListener('touchstart', forget);
     };
-  }, [reducedMotion]);
+  }, [reducedMotion, travel]);
 
   return (
     <MotionConfig reducedMotion="user">
-      <GuideScene reducedMotion={reducedMotion} />
       <ChapterMarker onTravel={travel} />
       <main>
-        <Opening reducedMotion={reducedMotion} onTravel={travel} />
+        <Opening reducedMotion={reducedMotion} />
         <ProcessChapter chapter={process} />
-        <BrandChapter chapter={brand} />
         <LogoChapter chapter={logo} />
         <ColorChapter chapter={color} />
         <TypeChapter chapter={type} />
-        <ImageryChapter chapter={imagery} />
         <Close />
       </main>
       <div className="curtain" ref={curtainRef} aria-hidden="true" />

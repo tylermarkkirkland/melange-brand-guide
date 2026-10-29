@@ -3,49 +3,51 @@
 // Everything else is taken from what the website already does.
 
 export const CHAPTERS = [
-  { id: 'process', number: '01', title: 'Process' },
-  { id: 'brand', number: '02', title: 'Brand' },
-  { id: 'logo', number: '03', title: 'Logo' },
-  { id: 'color', number: '04', title: 'Color' },
-  { id: 'type', number: '05', title: 'Typography' },
-  { id: 'imagery', number: '06', title: 'Imagery' },
+  { id: 'process', number: '01', title: 'Story' },
+  { id: 'logo', number: '02', title: 'Logo' },
+  { id: 'color', number: '03', title: 'Color' },
+  { id: 'type', number: '04', title: 'Typography' },
 ];
 
 export const OPENING = {
   // a presentation's title slide, not the website's landing
-  company: 'Melange Mercantile',
-  deck: 'UX growth project',
-  edition: '2026',
-  titleLines: ['Building', 'a Brand'],
-  subtitle: 'Melange Mercantile: a luxury spice trader set in the world of Dune, from first sketch to finished system.',
+  titleLines: ['Melange', 'Mercantile'],
+  subtitle: 'UX growth project 2026',
   presenterLabel: 'Presented by',
   presenter: 'Tyler Kirkland',
-  contentsLabel: 'Contents',
 };
 
-// How the brand was made, phase by phase, from the Research page of the Figma file.
-// Written plainly, in Tyler's own voice: this part is him talking, not the brand.
+// How the brand was made, from the Research page of the Figma file.
+// Slides, not pages: titles and pictures on screen; Tyler says the rest out loud.
 const m = (name, alt, width, height) => ({ src: `/process/${name}.webp`, alt, width, height });
-// a website I studied for the Phase 5 site: captured at 1440 × 900, captioned with what I liked
+// a website I studied for the Phase 5 site: captured at 1440 × 900, captioned with its address (`liked` is for the talk)
 const site = (name, url, liked, alt) => ({ ...m(name, alt, 1440, 900), site: url, liked });
 
 export const PROCESS = {
+  idea: {
+    title: 'A spice trader in the world of Dune',
+    image: { src: '/photos/arrival.webp', alt: 'A vast cargo hauler marked with the pillar, hovering over the desert at dusk' },
+  },
+  // who the brand is: the two archetypes and five personality words, on one slide
+  brand: {
+    archetypesLabel: 'Archetypes',
+    archetypes: [
+      { name: 'Ruler', words: ['Power', 'Authority', 'Control', 'Leadership'] },
+      { name: 'Sage', words: ['Knowledge', 'Wisdom', 'Expertise'] },
+    ],
+    personalityLabel: 'Personality',
+    personality: ['Prestigious', 'Authoritative', 'Sophisticated', 'Calculated', 'Elite'],
+    image: { src: '/photos/certificate.webp', alt: 'A certificate embossed with the lockup beside a black wax seal and its silver stamp' },
+  },
   naming: {
-    phase: 'Phase 1 · Research',
     title: 'Naming',
     names: ['House Melange', 'Melange Mercantile', 'Melange Consortium', 'Melange Exchange', 'Melange Reserve', 'The Melange Company'],
     chosen: 'Melange Mercantile',
     chosenLabel: 'Chosen',
-    why: [
-      'In Dune, the spice everyone fights over has a proper name: melange. It only comes from one desert planet, and the whole universe runs on it.',
-      'This company sells to the Great Houses, the most powerful families in that world, so I wanted the name to sound high-end. “Melange” feels a lot more refined than “spice.” “Mercantile” just says what they do: they’re traders.',
-    ],
     image: { src: '/photos/reserve.webp', alt: 'Four glass vials of melange in different grades, capped in silver, in a dark stone hall' },
   },
   moodboard: {
-    phase: 'Phase 1 · Direction',
     title: 'Moodboard',
-    intro: 'I pulled together brands, buildings, film stills and websites that had the feeling I was after: dark, quiet, expensive and a little mysterious.',
     keywords: ['Monolithic', 'Sacred', 'Elite', 'Timeless', 'Ceremonial', 'Strategic', 'Mysterious'],
     // three columns of different widths, so the board never reads as a grid.
     // Listed bottom-up on purpose: the glide comes to rest on the last few, Tyler's favorites.
@@ -86,58 +88,35 @@ export const PROCESS = {
     ],
   },
   sketch: {
-    phase: 'Phases 2 & 3 · Concept and logo',
     title: 'From sketch to mark',
     steps: [
       {
         label: 'Sketched',
-        note: 'About 60 quick pencil ideas. The pillar showed up early.',
         image: m('sketches', 'A sheet of about sixty pencil thumbnails: M letterforms, stars, diamonds, circles and pillars', 1401, 1032),
       },
       {
         label: 'Rendered with AI',
-        note: 'I gave AI my strongest sketches to turn into clean versions I could compare.',
         image: m('directions', 'Seven logo directions in gold on black, numbered 1 to 7; number 3 is the pillar', 1536, 1024),
       },
       {
         label: 'Final',
-        note: 'The pillar won. It reads as a monument and as an M.',
         image: { src: '/logo/pillar-silver.png', alt: 'The final pillar mark in brushed silver' },
         final: true,
       },
     ],
   },
-  metal: {
-    phase: 'Phase 4 · Visual identity',
-    title: 'Gold or silver',
-    options: [
-      { label: 'Gold', note: 'Tried first', src: '/process/mockups-gold-sheet.webp', alt: 'The brand in gold across a flag, banner, plaque, seal, crate, tag, coin, certificate and sack' },
-      { label: 'Silver', note: 'Where I landed', src: '/process/mockups-silver-sheet.webp', alt: 'The same applications in silver', chosen: true },
-    ],
-    chosenLabel: 'Chosen',
-    line: 'I tried it in gold first because I thought it might look cool. After more brand defining, looking at other examples and trying silver, I decided silver worked better with the direction I wanted for the brand.',
+  world: {
+    title: 'Grounding it in the world',
+    // anchored to the top, so the crop falls on the sheet's caption strip at the bottom
+    image: { src: '/process/mockups-silver-sheet.webp', alt: 'The brand in silver across a flag, banner, plaque, seal, crate, tag, coin, certificate and sack', position: '50% 0%' },
   },
 };
 
-export const BRAND = {
-  statement: 'A licensed spice trader that quietly supplies the most powerful families in the Dune universe.',
-  purposeLabel: 'Purpose',
-  purpose: 'Enable the secure movement and stewardship of the Imperium’s most valuable resource.',
-  personalityLabel: 'Personality',
-  personality: ['Prestigious', 'Authoritative', 'Sophisticated', 'Calculated', 'Elite'],
-  archetypesLabel: 'Archetypes',
-  archetypes: [
-    { name: 'Ruler', note: 'Power, authority, control' },
-    { name: 'Sage', note: 'Knowledge, expertise' },
-  ],
-};
-
 export const LOGO = {
-  primaryLabel: 'Primary lockup',
-  primaryNote: 'The pillar over the name. Use this version whenever there’s room.',
+  title: 'Logo use',
   variants: [
-    { id: 'mark', label: 'Mark', note: 'The pillar on its own, for when the name is already nearby.' },
-    { id: 'one-color', label: 'One color', note: 'One flat color, for light backgrounds, seals and print.' },
+    { id: 'logo', label: 'Dark backgrounds', note: 'The silver logo.' },
+    { id: 'one-color', label: 'Light backgrounds and print', note: 'The one-color logo, in black.' },
   ],
 };
 
@@ -166,7 +145,7 @@ export const SPICE = [
 
 export const COLOR = {
   paletteLabel: 'The palette',
-  paletteIntro: 'Cool, dark backgrounds, metal pulled from the logo, and a little spice.',
+  paletteIntro: 'Cool darks, metal from the logo, a little spice.',
   groundLabel: 'Ground',
   groundNote: 'Cool, dark backgrounds',
   metalLabel: 'Metal',
@@ -182,61 +161,41 @@ export const COLOR = {
 };
 
 export const TYPE = {
-  intro: 'Two kinds of type with a clear line between them. Cinzel is for the logo and big moments. Plex is for everything people actually read.',
-  // One column per voice: the typeface, what it's for, and a few real examples
+  examplesLabel: 'Example',
+  // One column per voice: the typeface, what it's for, then a small example in use
   voices: [
     {
       id: 'ceremonial',
       voice: 'Ceremonial',
       font: 'Cinzel',
-      glyph: 'MM',
-      glyphClass: 'type-glyph--cinzel',
-      note: 'The logo and big moments. Capitals only, never smaller than 24px, never for paragraphs.',
+      fontClass: 'type-font--cinzel',
+      note: 'The logo and big moments.',
       samples: [
-        { className: 'ceremonial-title', text: 'Certified reserve' },
         { className: 'ceremonial-label', text: 'Charter of trade' },
       ],
-      alphabet: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
     },
     {
       id: 'operational',
       voice: 'Operational',
       font: 'IBM Plex Sans',
-      glyph: 'Aa',
-      glyphClass: 'type-glyph--sans',
-      note: 'Anything people need to read or click. Normal sentence case.',
+      fontClass: 'type-font--sans',
+      note: 'Everything people read or click.',
       samples: [
-        { className: 'operational-title-lg', text: 'Consignment manifest' },
-        { className: 'operational-body', text: 'Every consignment is assayed at origin and travels under seal until it reaches the House that ordered it.' },
+        { className: 'operational-title-sm', text: 'Consignment manifest' },
+        { className: 'operational-body-sm', text: 'Assayed at origin, sealed until delivery.' },
       ],
-      alphabet: 'Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm',
     },
     {
       id: 'data',
       voice: 'Data',
       font: 'IBM Plex Mono',
-      glyph: '01',
-      glyphClass: 'type-glyph--mono',
+      fontClass: 'type-font--mono',
       note: 'Codes, numbers and statuses.',
       samples: [
-        { className: 'data-figure', figure: '99.4', suffix: '%' },
         { className: 'data-row', text: 'MM-114-Δ  ·  12.480 kg' },
         { className: 'data-tag', text: 'Guarantee active', status: true },
       ],
-      alphabet: '0123456789  #  %  ·  Δ',
     },
-  ],
-};
-
-// Taken from the website: its photographs and the grade every one of them shares
-export const IMAGERY = {
-  intro: 'Every photo on the site is one object, lit from one side, mostly in shadow.',
-  ai: 'I built the website itself with AI as my coding partner. These photos come from it.',
-  photos: [
-    { src: '/photos/tag.webp', alt: 'A silver consignment tag engraved with the pillar, resting on a burlap sack of melange', label: 'One subject', line: 'A single object or structure fills the frame. Never a crowd.' },
-    { src: '/photos/crate.webp', alt: 'A shipping crate marked with the pillar in a hazy hangar', label: 'Engraved, never printed', line: 'The pillar is cast, stamped or engraved into the material.' },
-    { src: '/photos/seal.webp', alt: 'A black wax seal pressed with the pillar', label: 'Low, hard light', line: 'One source from the side. Most of the frame sits in shadow.' },
-    { src: '/photos/banner.webp', alt: 'A silver banner bearing the pillar in a stone hall', label: 'Color held back', line: 'Color turned down, deep blacks, cool shadows and warm light.' },
   ],
 };
 

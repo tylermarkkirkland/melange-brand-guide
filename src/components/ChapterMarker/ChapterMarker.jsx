@@ -5,8 +5,8 @@ import { EASE } from '../Reveal/Reveal.jsx';
 import './ChapterMarker.css';
 
 /**
- * The guide's only chrome: where you are ("02 / 05 Logo") top left, which opens
- * the chapter list, and the docked pillar top center, which returns to the start.
+ * The guide's only chrome: where you are ("02 / 04 Logo") top left, which opens
+ * the chapter list. Home returns to the start (App.jsx).
  * Hidden on the opening and the close.
  */
 export default function ChapterMarker({ onTravel }) {
@@ -99,10 +99,6 @@ export default function ChapterMarker({ onTravel }) {
               </motion.ol>
             )}
           </AnimatePresence>
-
-          <button className="marker__home" type="button" onClick={() => go('top')} aria-label="Back to the start">
-            <img src="/logo/pillar-silver.png" alt="" />
-          </button>
         </motion.nav>
       )}
     </AnimatePresence>

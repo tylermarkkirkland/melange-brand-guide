@@ -13,49 +13,13 @@
   padding: 40px var(--gutter) 44px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-rows: auto 1fr auto;
   column-gap: 64px;
   overflow: hidden;
 }
 
-/* hairlines: Pewter dark, drawn in from the left */
-.opening__rule {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: var(--pewter-dark);
-  transform-origin: left;
-}
-
-.opening__head {
-  grid-column: 1 / -1;
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 24px;
-}
-
-.opening__head .opening__rule { bottom: 0; }
-
-.opening__company,
-.opening__edition {
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  min-height: 44px;
-}
-
-.opening__company { color: var(--chrome); }
-.opening__company img { height: 28px; width: auto; }
-.opening__edition { color: var(--pewter); gap: 10px; }
-
-/* Title, subtitle, presenter: left, set low like a cover */
+/* Title, subtitle, presenter: left, centered vertically */
 .opening__title-block {
   align-self: center;
-  padding-top: 24px;
 }
 
 .opening__title {
@@ -97,55 +61,7 @@
   user-select: none;
 }
 
-/* Contents: the agenda for the talk */
-.opening__contents {
-  grid-column: 1 / -1;
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr 5fr;
-  align-items: start;
-  padding-top: 20px;
-}
-
-.opening__contents .opening__rule { top: 0; }
-
-.opening__contents-label {
-  margin: 0;
-  color: var(--pewter);
-  display: flex;
-  align-items: center;
-  min-height: 44px;
-}
-
-.opening__contents ol {
-  grid-column: 2 / -1;
-  display: grid;
-  grid-template-columns: repeat(var(--count, 5), minmax(0, 1fr));
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.opening__contents button {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  min-height: 44px;
-  padding: 0;
-  background: none;
-  border: 0;
-  color: var(--silver);
-  cursor: pointer;
-  font: inherit;
-  transition: color 0.4s var(--ease);
-}
-
-.opening__contents button:hover { color: var(--chrome); }
-
 @media (max-width: 860px) {
   .opening__slide { grid-template-columns: 1fr; }
   .opening__mark { display: none; }
-  .opening__edition { display: none; }
-  .opening__contents { grid-template-columns: 1fr; }
-  .opening__contents ol { grid-column: 1; grid-template-columns: 1fr 1fr; }
 }

@@ -1,4 +1,4 @@
-/* A process screen: phase and title, then the work, as big as it can be */
+/* A story slide: a short title, then the work, as big as it can be */
 .screen.process {
   display: flex;
   flex-direction: column;
@@ -12,19 +12,119 @@
   margin: 0;
 }
 
-.process__head .process__phase {
-  color: var(--pewter);
-  margin-bottom: 8px;
-}
-
 .process__title {
   color: var(--chrome);
 }
 
-.process__line {
+/* ---- full-bleed slides (the idea, the brand in the world): a picture, its title over the dark corner ---- */
+.screen.idea {
+  position: relative;
+  height: 100vh;
+  min-height: 560px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.idea__image,
+.idea__image img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.idea__image img {
+  object-fit: cover;
+}
+
+/* darken the left and bottom so the words read */
+.idea__image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(7, 10, 12, 0.9) 0%, rgba(7, 10, 12, 0.55) 45%, rgba(7, 10, 12, 0) 75%),
+    linear-gradient(0deg, rgba(7, 10, 12, 0.7) 0%, rgba(7, 10, 12, 0) 40%);
+}
+
+.idea__text {
+  position: absolute;
+  left: var(--gutter);
+  bottom: 96px;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.idea__text p,
+.idea__text h3 {
   margin: 0;
-  max-width: 44em;
-  color: var(--silver-light);
+}
+
+/* ---- who the brand is: archetypes, then personality, beside a photo ---- */
+.screen.brand {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 64px;
+  height: 100vh;
+  min-height: 560px;
+}
+
+.brand__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 72px;
+}
+
+.brand__group p,
+.brand__group ul,
+.archetype__name {
+  margin: 0;
+}
+
+.brand__group .brand__label {
+  color: var(--pewter);
+  margin-bottom: 24px;
+}
+
+.brand__archetypes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px 72px;
+}
+
+.archetype__words,
+.brand__personality {
+  list-style: none;
+  padding: 0;
+}
+
+.archetype .archetype__words {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--silver);
+}
+
+.brand__personality {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  color: var(--chrome);
+}
+
+.brand__image {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.brand__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* ---- naming: the names and the why on the left, melange itself on the right ---- */
@@ -58,12 +158,6 @@
   color: var(--pewter);
 }
 
-.naming__why p {
-  margin: 0 0 16px;
-  max-width: 32em;
-  color: var(--silver);
-}
-
 .naming__image {
   overflow: hidden;
   min-height: 0;
@@ -90,11 +184,6 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
-}
-
-.mood__intro {
-  margin: 0;
-  color: var(--silver);
 }
 
 .mood__keywords {
@@ -138,20 +227,15 @@
   display: block;
 }
 
-/* a website reference: the capture, then which site and what I liked about it */
+/* a website reference: the capture, then which site */
 .mood__cell--site {
   background: none;
 }
 
 .mood__caption {
   margin: 10px 0 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+  color: var(--pewter);
 }
-
-.mood__caption .data-tag { color: var(--pewter); }
-.mood__caption .operational-body-sm { color: var(--silver-light); }
 
 /* ---- sketch to mark: three panels, same height, widths follow the work ---- */
 .steps {
@@ -205,51 +289,13 @@
   color: var(--chrome);
 }
 
-.step .step__note {
-  margin-top: 6px;
-  max-width: 30em;
-  color: var(--silver);
-}
-
-/* ---- gold or silver: the two full sheets of assets ---- */
-.metal-pick {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-}
-
-.metal-pick__option img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 1402 / 1122;
-  max-height: 50vh;
-  object-fit: cover;
-}
-
-/* gold or silver: the story sits beside the title, so the two sheets can be big */
-.metal-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 24px;
-  align-items: end;
-}
-
-.metal-pick__label {
-  margin: 16px 0 0;
-  display: flex;
-  align-items: baseline;
-  gap: 16px;
-  color: var(--chrome);
-}
-
-.metal-pick__note {
-  color: var(--silver);
-}
-
 @media (max-width: 900px) {
   .screen.naming { grid-template-columns: 1fr; }
   .naming__image { height: 60vh; }
   /* narrow screens: still one screen. Words on top, compact; the board fills the rest */
+  .screen.brand { grid-template-columns: 1fr; height: auto; }
+  .brand__text { gap: 48px; }
+  .brand__image { height: 50vh; }
   .screen.mood {
     grid-template-columns: 1fr;
     grid-template-rows: auto minmax(0, 1fr);
@@ -262,7 +308,6 @@
   .mood__board { gap: 10px; } /* always three columns: the glide measures each one */
   .mood__column { gap: 10px; }
   .steps { grid-template-columns: 1fr; }
-  .metal-pick { grid-template-columns: 1fr; }
 }
 
 /* short screens (a 720p projector): tighten so each page still fits on one screen */
@@ -271,8 +316,6 @@
   .screen.mood { padding-bottom: 0; }
   .naming__text { gap: 24px; }
   .naming__list { gap: 0; }
-  .naming__why p { font-size: 16px; line-height: 28px; margin-bottom: 8px; }
   .step__frame { height: 36vh; }
   .step .step__label { margin-top: 12px; }
-  .metal-pick__option img { max-height: 44vh; }
 }

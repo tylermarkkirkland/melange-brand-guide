@@ -2,26 +2,74 @@ import React, { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 import { animate, motion, useMotionValue, useReducedMotion } from 'framer-motion';
 import { PROCESS } from '../../data/content.js';
 import ChapterOpener from '../ChapterOpener/ChapterOpener.jsx';
-import { Reveal, EASE } from '../Reveal/Reveal.jsx';
+import { Reveal } from '../Reveal/Reveal.jsx';
 import './ProcessChapter.css';
 
-/* Every process screen opens the same way: which phase, then what it was */
-function Head({ phase, title }) {
+/* Every story slide has a short title; Tyler tells the rest out loud */
+function Head({ title }) {
   return (
     <header className="process__head">
-      <Reveal as="p" className="data-tag process__phase">{phase}</Reveal>
-      <Reveal as="h3" className="operational-title-lg process__title" delay={0.1}>{title}</Reveal>
+      <Reveal as="h3" className="operational-title-lg process__title">{title}</Reveal>
     </header>
   );
 }
 
-/* Phase 1: six names, one kept, and why */
+/* A full-bleed picture with its title over the dark corner: the idea, and the brand in the world */
+function FullBleed({ title, image }) {
+  return (
+    <section className="chapter-body screen idea" aria-label={title}>
+      <Reveal className="idea__image" y={0}>
+        <img src={image.src} alt={image.alt} style={{ objectPosition: image.position }} draggable="false" />
+      </Reveal>
+      <div className="idea__text">
+        <Reveal as="h3" className="ceremonial-title metal-text idea__title" delay={0.2}>{title}</Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* Who the brand is: the two archetypes and five personality words, beside a photo that feels that way */
+function Brand() {
+  const { archetypesLabel, archetypes, personalityLabel, personality, image } = PROCESS.brand;
+  return (
+    <section className="chapter-body screen process brand" aria-label="Archetypes and personality">
+      <div className="brand__text">
+        <div className="brand__group">
+          <Reveal as="p" className="data-tag brand__label">{archetypesLabel}</Reveal>
+          <div className="brand__archetypes">
+            {archetypes.map((a, i) => (
+              <Reveal key={a.name} className="archetype" delay={0.15 + i * 0.2} y={16}>
+                <h3 className="ceremonial-title metal-text archetype__name">{a.name}</h3>
+                <ul className="archetype__words">
+                  {a.words.map((w) => <li key={w} className="operational-body-lg">{w}</li>)}
+                </ul>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+        <div className="brand__group">
+          <Reveal as="p" className="data-tag brand__label" delay={0.5}>{personalityLabel}</Reveal>
+          <ul className="brand__personality">
+            {personality.map((w, i) => (
+              <Reveal as="li" key={w} className="operational-title-sm" delay={0.6 + i * 0.08} y={10}>{w}</Reveal>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <Reveal className="brand__image" delay={0.3} y={24}>
+        <img src={image.src} alt={image.alt} draggable="false" />
+      </Reveal>
+    </section>
+  );
+}
+
+/* Six names, one kept */
 function Naming() {
-  const { phase, title, names, chosen, chosenLabel, why, image } = PROCESS.naming;
+  const { title, names, chosen, chosenLabel, image } = PROCESS.naming;
   return (
     <section className="chapter-body screen process naming" aria-label={title}>
       <div className="naming__text">
-        <Head phase={phase} title={title} />
+        <Head title={title} />
         <ol className="naming__list">
           {names.map((n, i) => {
             const isChosen = n === chosen;
@@ -33,11 +81,6 @@ function Naming() {
             );
           })}
         </ol>
-        <div className="naming__why">
-          {why.map((p, i) => (
-            <Reveal as="p" key={p} className="operational-body-lg" delay={0.8 + i * 0.15}>{p}</Reveal>
-          ))}
-        </div>
       </div>
       <Reveal className="naming__image" delay={0.3} y={24}>
         <img src={image.src} alt={image.alt} draggable="false" />
@@ -46,7 +89,7 @@ function Naming() {
   );
 }
 
-/* Phase 1: one screen. The words hold still on the left; once you arrive, the board glides
+/* The moodboard, one screen. The words hold still on the left; once you arrive, the board glides
    up on its own and stops at the bottom, so it takes one press, not several.
    One number drives it: progress, 0 (top) to 1 (bottom). The glide animates it; the wheel or
    trackpad over the board nudges it, clamped, so it can never run past either end. At an end,
@@ -55,7 +98,7 @@ function Naming() {
 const GLIDE_DELAY = 0.8; // seconds: let the words and first images settle first
 
 function Moodboard() {
-  const { phase, title, intro, keywords, columns } = PROCESS.moodboard;
+  const { title, keywords, columns } = PROCESS.moodboard;
   const reduced = useReducedMotion();
   const boardRef = useRef(null);
   const colRefs = useRef([]);
@@ -133,8 +176,7 @@ function Moodboard() {
       viewport={{ amount: 0.6 }}
     >
       <div className="mood__text">
-        <Head phase={phase} title={title} />
-        <Reveal as="p" className="operational-body-lg mood__intro" delay={0.2}>{intro}</Reveal>
+        <Head title={title} />
         <Reveal as="ul" className="mood__keywords" delay={0.35}>
           {keywords.map((k) => <li key={k} className="data-tag">{k}</li>)}
         </Reveal>
@@ -145,12 +187,7 @@ function Moodboard() {
             {col.map((img, i) => (
               <Reveal key={img.src} className={`mood__cell${img.site ? ' mood__cell--site' : ''}`} delay={(i % 2) * 0.1 + c * 0.08} y={24}>
                 <img src={img.src} alt={img.alt} width={img.width} height={img.height} draggable="false" />
-                {img.site && (
-                  <p className="mood__caption">
-                    <span className="data-tag">{img.site}</span>
-                    <span className="operational-body-sm">{img.liked}</span>
-                  </p>
-                )}
+                {img.site && <p className="mood__caption data-tag">{img.site}</p>}
               </Reveal>
             ))}
           </div>
@@ -160,12 +197,12 @@ function Moodboard() {
   );
 }
 
-/* Phases 2 and 3: what I drew, what AI made of it, what I kept */
+/* What I drew, what AI made of it, what I kept */
 function SketchToMark() {
-  const { phase, title, steps } = PROCESS.sketch;
+  const { title, steps } = PROCESS.sketch;
   return (
     <section className="chapter-body screen process" aria-label={title}>
-      <Head phase={phase} title={title} />
+      <Head title={title} />
       <ol className="steps">
         {steps.map((s, i) => (
           <Reveal as="li" key={s.label} className={`step${s.final ? ' step--final' : ''}`} delay={0.2 + i * 0.25} y={24}>
@@ -176,43 +213,9 @@ function SketchToMark() {
               <span className="data-tag ember-number">{String(i + 1).padStart(2, '0')}</span>
               <span className="operational-title-sm">{s.label}</span>
             </p>
-            <p className="operational-body-sm step__note">{s.note}</p>
           </Reveal>
         ))}
       </ol>
-    </section>
-  );
-}
-
-/* Phase 4: everything I'd made in gold, beside the same in silver; gold steps back */
-function Metal() {
-  const { phase, title, options, chosenLabel, line } = PROCESS.metal;
-  return (
-    <section className="chapter-body screen process" aria-label={title}>
-      <div className="metal-head">
-        <Head phase={phase} title={title} />
-        <Reveal as="p" className="operational-body-lg process__line" delay={0.3}>{line}</Reveal>
-      </div>
-      <div className="metal-pick">
-        {options.map((o, i) => (
-          <Reveal key={o.label} className="metal-pick__option" delay={0.2 + i * 0.2} y={24}>
-            <motion.img
-              src={o.src}
-              alt={o.alt}
-              draggable="false"
-              initial={{ opacity: 1 }}
-              whileInView={o.chosen ? undefined : { opacity: 0.4 }}
-              viewport={{ amount: 0.6 }}
-              transition={{ duration: 1.6, ease: EASE, delay: 1.8 }}
-            />
-            <p className="metal-pick__label">
-              <span className="operational-title-sm">{o.label}</span>
-              <span className="operational-body-sm metal-pick__note">{o.note}</span>
-              {o.chosen && <span className="data-tag ember-number">{chosenLabel}</span>}
-            </p>
-          </Reveal>
-        ))}
-      </div>
     </section>
   );
 }
@@ -221,10 +224,12 @@ export default function ProcessChapter({ chapter }) {
   return (
     <div id={chapter.id} data-chapter={chapter.id}>
       <ChapterOpener number={chapter.number} title={chapter.title} />
+      <FullBleed {...PROCESS.idea} />
+      <Brand />
       <Naming />
       <Moodboard />
       <SketchToMark />
-      <Metal />
+      <FullBleed {...PROCESS.world} />
     </div>
   );
 }

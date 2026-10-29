@@ -1,23 +1,19 @@
-/* Typography: one page. The intro, then three columns, one per voice */
+/* Typography: one page, three columns, one per voice */
 .screen.type {
   height: 100vh;
   min-height: 640px;
   padding-top: 136px;
-  padding-bottom: 64px;
+  padding-bottom: 80px;
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  justify-content: center;
 }
 
-.type__intro {
-  margin: 0;
-  max-width: 40em;
-  color: var(--chrome);
-}
-
+/* columns share a height, so the examples line up along the bottom */
 .type__voices {
   flex: 1;
   min-height: 0;
+  max-height: 340px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 48px;
@@ -27,8 +23,6 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  border-top: 1px solid var(--slate);
-  padding-top: 20px;
 }
 
 .voice p {
@@ -39,35 +33,40 @@
   color: var(--pewter);
 }
 
-/* the face itself, large: the one specimen that isn't a text style */
-.voice .type-glyph {
-  margin-top: 24px;
-  font-size: 120px;
-  line-height: 1;
+/* the typeface I chose: the hero, set in itself */
+.voice .voice__font {
+  margin: 20px 0 0;
+  font-size: 48px;
+  line-height: 56px;
+  font-weight: 500;
   color: var(--chrome);
 }
 
-.type-glyph--cinzel { font-family: var(--font-ceremonial); letter-spacing: 0.06em; }
-.type-glyph--sans { font-family: var(--font-sans); font-weight: 500; }
-.type-glyph--mono { font-family: var(--font-mono); font-weight: 500; }
+.type-font--cinzel { font-family: var(--font-ceremonial); font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; }
+.type-font--sans { font-family: var(--font-sans); }
+.type-font--mono { font-family: var(--font-mono); letter-spacing: -0.01em; }
 
+/* what it's for, right under the name */
 .voice .voice__note {
-  margin-top: 24px;
-  max-width: 26em;
+  margin-top: 16px;
+  max-width: 22em;
   color: var(--silver);
 }
 
-.voice__samples {
-  margin-top: 32px;
+/* a small example in use, quiet, along the bottom; one height, so the labels line up */
+.voice__example {
+  margin-top: auto;
+  padding-top: 32px;
+  min-height: 132px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  color: var(--chrome);
+  gap: 8px;
+  color: var(--silver);
 }
 
-.voice .voice__sample.operational-body {
-  color: var(--silver);
-  max-width: 26em;
+.voice .voice__example-label {
+  color: var(--pewter);
+  margin-bottom: 4px;
 }
 
 /* a state: ember, with a shape and a label, never color alone (rule 02) */
@@ -81,31 +80,16 @@
   vertical-align: 1px;
 }
 
-.voice .voice__alphabet {
-  margin-top: auto;
-  padding-top: 24px;
-  font-size: 16px;
-  line-height: 28px;
-  letter-spacing: 0.04em;
-  color: var(--pewter);
-  overflow-wrap: anywhere;
-}
-
-/* Cinzel's floor is 24px, so its alphabet is set at the floor */
-.voice .voice__alphabet.type-glyph--cinzel {
-  font-size: 24px;
-  line-height: 32px;
-  letter-spacing: 0.12em;
-}
-
 @media (max-height: 800px) and (min-width: 901px) {
-  .screen.type { padding-top: 112px; padding-bottom: 40px; gap: 32px; }
-  .voice .type-glyph { font-size: 88px; margin-top: 16px; }
-  .voice__samples { margin-top: 20px; gap: 10px; }
-  .voice .voice__note { margin-top: 16px; }
+  .screen.type { padding-top: 112px; padding-bottom: 48px; }
+}
+
+/* narrower screens: the names step down so IBM Plex Mono stays on one line */
+@media (max-width: 1200px) {
+  .voice .voice__font { font-size: 32px; line-height: 40px; }
 }
 
 @media (max-width: 900px) {
   .screen.type { height: auto; }
-  .type__voices { grid-template-columns: 1fr; }
+  .type__voices { grid-template-columns: 1fr; max-height: none; }
 }
